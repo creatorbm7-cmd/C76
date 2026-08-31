@@ -1,0 +1,82 @@
+/*
+ * admin-dark.css — scoped DARK theme for the /admin console only.
+ *
+ * The console content was authored "light" (white cards + Tailwind text-white
+ * utilities). This theme flips it to a cohesive premium dark look by:
+ *   1. redefining the --c7-* design tokens inside .admin-dark,
+ *   2. a dark content canvas (body gets .admin-dark-active from Admin.tsx),
+ *   3. repainting the shared card surfaces (.ac-card / .ro-card / .c74-card /
+ *      .av8-surface / .av8-gradient-border) and white utility fills dark,
+ *   4. remapping the light "slate" text utilities to light-on-dark tints.
+ *
+ * text-white / accent (emerald/amber/cyan/rose/sky) utilities are left at their
+ * default Tailwind values — already bright, so they read correctly on dark. The
+ * sidebar/topbar rails are already dark and are untouched.
+ *
+ * Presentation only — no logic, data, route or RPC is affected.
+ */
+
+/* ── 1. Dark design tokens (inherited by inline var(--c7-*) usages) ── */
+.admin-dark {
+  --c7-bg: #0a0e15;          --c7-bg-rgb: 10,14,21;
+  --c7-surface: #141a24;
+  --c7-primary: #22e07a;     --c7-primary-rgb: 34,224,122;
+  --c7-primary-dark: #0b7a3f;
+  --c7-teal: #2dd4bf;        --c7-teal-rgb: 45,212,191;
+  --c7-accent: #f5c451;      --c7-accent-rgb: 245,196,81;
+  --c7-gold: #f5c451;        --c7-gold-rgb: 245,196,81;
+  --c7-gold-soft: #ffe08a;
+  --c7-success: #22e07a;     --c7-success-rgb: 34,224,122;
+  --c7-danger: #ff5c6c;      --c7-danger-rgb: 255,92,108;
+  color: #e6edf6;
+}
+
+/* ── 2. Content canvas ── */
+body.admin-dark-active,
+body.admin-dark-active #root {
+  background: #0a0e15 !important;
+}
+.admin-dark ::-webkit-scrollbar-track { background: #0f141c; }
+.admin-dark ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #2a3444, #1b232f); }
+
+/* ── 3. Shared card surfaces (component <style> + inline whites) → dark ── */
+.admin-dark .ac-card,
+.admin-dark .ro-card,
+.admin-dark .c74-card,
+.admin-dark .av8-surface {
+  background: linear-gradient(180deg, #141a24, #0f141c) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  color: #e6edf6;
+}
+/* V8 premium hero wrapper (inline white gradient) → dark */
+.admin-dark .av8-gradient-border { background: linear-gradient(135deg, #141a24, #0f141c) !important; }
+/* generic white fills → dark surface */
+.admin-dark .bg-white { background-color: #141a24 !important; }
+.admin-dark .bg-slate-50  { background-color: rgba(255,255,255,0.03) !important; }
+.admin-dark .bg-slate-100 { background-color: rgba(255,255,255,0.05) !important; }
+
+/* ── 4. "slate" text utilities → light-on-dark tints ── */
+.admin-dark .text-slate-900 { color: #f1f5f9 !important; }
+.admin-dark .text-slate-800 { color: #e6edf6 !important; }
+.admin-dark .text-slate-700 { color: rgba(230,237,246,0.82) !important; }
+.admin-dark .text-slate-600 { color: rgba(230,237,246,0.70) !important; }
+.admin-dark .text-slate-500 { color: rgba(230,237,246,0.55) !important; }
+.admin-dark .text-slate-400 { color: rgba(230,237,246,0.45) !important; }
+.admin-dark .text-slate-300 { color: rgba(230,237,246,0.35) !important; }
+
+/* ── 5. borders + inputs ── */
+.admin-dark .border-slate-100,
+.admin-dark .border-slate-200 { border-color: rgba(255,255,255,0.08) !important; }
+.admin-dark input,
+.admin-dark textarea,
+.admin-dark select,
+.admin-dark .ro-in {
+  background: rgba(255,255,255,0.04) !important;
+  color: #e6edf6 !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+.admin-dark input::placeholder,
+.admin-dark textarea::placeholder { color: rgba(230,237,246,0.35) !important; }
+
+/* subtle default hairline for bare `border` utility on dark */
+.admin-dark .border { border-color: rgba(255,255,255,0.08); }

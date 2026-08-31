@@ -1,0 +1,64 @@
+/* C7Winner — Shared component animations */
+
+@keyframes c7-fade-up {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes c7-slide-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes c7-pulse {
+  0%,100% { opacity: 0.6; transform: scale(1); }
+  50%     { opacity: 1; transform: scale(1.05); }
+}
+@keyframes c7-glow-pulse {
+  0%,100% { box-shadow: 0 0 8px rgba(0,255,213,0.4); }
+  50%     { box-shadow: 0 0 24px rgba(0,255,213,0.75); }
+}
+@keyframes c7-gold-glow-pulse {
+  0%,100% { box-shadow: 0 0 8px rgba(255,201,64,0.4); }
+  50%     { box-shadow: 0 0 28px rgba(255,201,64,0.85); }
+}
+@keyframes c7-ticker-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes c7-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes c7-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes c7-float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-4px); }
+}
+@keyframes c7-rank-pop {
+  0%   { opacity: 0; transform: scale(0.5) rotate(-20deg); }
+  60%  { transform: scale(1.15) rotate(8deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* Utility classes */
+.c7-card {
+  animation: c7-fade-up 0.42s cubic-bezier(0.16,1,0.3,1) both;
+  transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s;
+}
+.c7-card:active { transform: scale(0.98); }
+.c7-game:hover { transform: translateY(-4px) scale(1.02); }
+.c7-pulse-live { animation: c7-pulse 1.6s ease-in-out infinite; }
+.c7-glow-pulse { animation: c7-glow-pulse 2.4s ease-in-out infinite; }
+.c7-gold-glow-pulse { animation: c7-gold-glow-pulse 2.4s ease-in-out infinite; }
+.c7-ticker { animation: c7-ticker-in 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+.c7-btn { transition: transform 0.12s; cursor: pointer; }
+.c7-btn:active { transform: scale(0.94); }
+.c7-slide-in { animation: c7-slide-in 0.36s cubic-bezier(0.16,1,0.3,1) both; }
+.c7-rank-pop { animation: c7-rank-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+.c7-float { animation: c7-float 2.4s ease-in-out infinite; }
+.c7-shimmer {
+  background: linear-gradient(90deg,transparent 0%,rgba(0,255,213,0.18) 50%,transparent 100%);
+  background-size: 200% 100%;
+  animation: c7-shimmer 2.4s linear infinite;
+}

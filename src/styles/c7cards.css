@@ -1,0 +1,173 @@
+/* C7 Cards — cartoon 3D card primitives.
+   Pure CSS / transform-3d. No WebGL. 60fps on low-end Android. */
+
+.c7c-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 38%, #1e6f4a 0%, #0a3a26 55%, #04150e 100%),
+    #0f0a00;
+  background-blend-mode: normal;
+}
+
+.c7c-felt {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(61, 217, 166, 0.18), transparent 70%),
+    radial-gradient(ellipse 95% 80% at 50% 50%, #155a3b 0%, #0a3a26 60%, #062417 100%);
+  box-shadow:
+    inset 0 0 80px rgba(0,0,0,0.55),
+    inset 0 0 0 2px rgba(61, 217, 166, 0.25),
+    0 30px 60px rgba(0,0,0,0.6);
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.c7c-card {
+  --w: 72px;
+  --h: 108px;
+  width: var(--w);
+  height: var(--h);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 320ms cubic-bezier(.2,.9,.25,1.2), box-shadow 220ms;
+  will-change: transform;
+  border-radius: 14px;
+}
+.c7c-card.lg { --w: 96px; --h: 144px; }
+.c7c-card.sm { --w: 48px; --h: 72px; }
+
+.c7c-face, .c7c-back {
+  position: absolute; inset: 0;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-family: "Syne", system-ui, sans-serif;
+  user-select: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -2px 8px rgba(0,0,0,0.35),
+    0 6px 12px rgba(0,0,0,0.45);
+}
+
+.c7c-face {
+  background:
+    radial-gradient(ellipse at 30% 22%, rgba(255,255,255,0.75) 0%, transparent 45%),
+    linear-gradient(160deg, var(--card-bg, #e22) 0%, var(--card-bg-2, #b00) 100%);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.45), 0 0 2px rgba(0,0,0,0.6);
+  border: 3px solid white;
+}
+.c7c-back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(ellipse at 30% 22%, rgba(255,255,255,0.5) 0%, transparent 40%),
+    linear-gradient(160deg, #0d1117 0%, #1a1f2e 50%, #0a0d14 100%);
+  border: 3px solid #FFCC00;
+  color: #FFCC00;
+}
+.c7c-back::after {
+  content: "C7";
+  font-size: calc(var(--h) * 0.32);
+  letter-spacing: -0.05em;
+  text-shadow: 0 0 12px rgba(255,204,0,0.7), 0 2px 4px rgba(0,0,0,0.7);
+  transform: rotate(-18deg);
+}
+
+.c7c-card.is-flipped { transform: rotateY(180deg); }
+
+/* Corner pips */
+.c7c-face .c7c-pip {
+  position: absolute;
+  font-size: calc(var(--h) * 0.16);
+  line-height: 1;
+}
+.c7c-face .c7c-pip.tl { top: 6px; left: 6px; }
+.c7c-face .c7c-pip.br { bottom: 6px; right: 6px; transform: rotate(180deg); }
+.c7c-face .c7c-center { font-size: calc(var(--h) * 0.42); }
+
+/* Color variants */
+.c7c-card[data-color="r"] { --card-bg: #ff4d4d; --card-bg-2: #b71c1c; }
+.c7c-card[data-color="b"] { --card-bg: #4d8dff; --card-bg-2: #0d47a1; }
+.c7c-card[data-color="g"] { --card-bg: #4caf50; --card-bg-2: #1b5e20; }
+.c7c-card[data-color="y"] { --card-bg: #ffd64d; --card-bg-2: #f57f17; }
+.c7c-card[data-color="w"] {
+  --card-bg: #2b2b2b; --card-bg-2: #000;
+}
+.c7c-card[data-color="w"] .c7c-face {
+  background:
+    conic-gradient(from 0deg, #ff4d4d 0deg 90deg, #ffd64d 90deg 180deg, #4caf50 180deg 270deg, #4d8dff 270deg 360deg);
+  position: relative;
+}
+.c7c-card[data-color="w"] .c7c-face::before {
+  content: "";
+  position: absolute; inset: 14%;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.7);
+  z-index: 0;
+}
+.c7c-card[data-color="w"] .c7c-face > * { position: relative; z-index: 1; }
+
+/* Playable highlight */
+.c7c-card.is-playable .c7c-face {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -2px 8px rgba(0,0,0,0.35),
+    0 0 0 2px #FFCC00,
+    0 0 18px rgba(255,204,0,0.65),
+    0 6px 16px rgba(0,0,0,0.5);
+}
+.c7c-card.is-dimmed { opacity: 0.55; filter: saturate(0.7); }
+
+.c7c-card:hover { transform: translateY(-8px) scale(1.04); }
+.c7c-card.is-flipped:hover { transform: rotateY(180deg) translateY(-4px); }
+
+/* Deal animation */
+@keyframes c7c-deal {
+  from { transform: translate(var(--from-x, 0px), var(--from-y, -200px)) rotate(var(--from-r, -25deg)) scale(0.6); opacity: 0; }
+  to   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+}
+.c7c-deal { animation: c7c-deal 480ms cubic-bezier(.2,.9,.25,1.1) backwards; }
+
+@keyframes c7c-toss {
+  0% { transform: translateY(0) rotate(0); }
+  60% { transform: translateY(-80px) rotate(8deg) scale(1.06); }
+  100% { transform: translateY(0) rotate(0); }
+}
+.c7c-toss { animation: c7c-toss 380ms ease; }
+
+/* Hand fan */
+.c7c-hand {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 8px 0 4px;
+  min-height: 120px;
+  perspective: 800px;
+}
+.c7c-hand .c7c-card {
+  margin: 0 -22px;
+  transform-origin: 50% 130%;
+  transition: transform 200ms ease, margin 200ms ease;
+}
+.c7c-hand .c7c-card:hover {
+  margin: 0 -10px;
+  z-index: 50;
+}
+
+/* Turn pulse for active seat */
+@keyframes c7c-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61,217,166,0.7), 0 0 16px rgba(61,217,166,0.6); }
+  50% { box-shadow: 0 0 0 10px rgba(61,217,166,0), 0 0 22px rgba(61,217,166,0.9); }
+}
+.c7c-seat.is-active { animation: c7c-pulse 1400ms ease-in-out infinite; }
+
+/* Confetti dot */
+@keyframes c7c-confetti {
+  0% { transform: translate(0, -10vh) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--dx,0), 110vh) rotate(720deg); opacity: 0; }
+}
+.c7c-confetti-piece {
+  position: absolute; width: 8px; height: 14px; border-radius: 2px;
+  animation: c7c-confetti 2.2s ease-in forwards;
+}

@@ -1,0 +1,100 @@
+/**
+ * admin-light.css — scoped LIGHT (white) theme for the /admin console only.
+ *
+ * The casino front-end keeps its dark jungle-green palette. The admin panel is
+ * inverted to a clean white SaaS look by:
+ *   1. redefining the --c7-* design tokens inside .admin-light  (covers every
+ *      inline `var(--c7-*)` usage automatically),
+ *   2. overriding the fixed html/body/#root dark gradient while admin is open
+ *      (body gets .admin-light-active from Admin.tsx),
+ *   3. remapping the dark Tailwind utility classes (text-white*, border-white*,
+ *      bg-white*, ring-white*, emerald/amber/cyan accents) to light values.
+ *
+ * Inline color LITERALS (e.g. style={{background:'#06180f'}}) are inverted at
+ * the source by the theme migration (white→dark overlays, dark hex→white);
+ * this file only handles token + class based styling.
+ */
+
+/* ── 1. Light design tokens (inherited by inline var(--c7-*) usages) ── */
+.admin-light {
+  --c7-bg: #f4f6f8;          --c7-bg-rgb: 244,246,248;
+  --c7-surface: #ffffff;
+  --c7-primary: #16a34a;     --c7-primary-rgb: 22,163,74;   /* slightly deeper green for contrast on white */
+  --c7-primary-dark: #0b7a3f;
+  --c7-teal: #0d9488;        --c7-teal-rgb: 13,148,136;
+  --c7-accent: #d97706;      --c7-accent-rgb: 217,119,6;
+  --c7-gold: #d97706;        --c7-gold-rgb: 217,119,6;
+  --c7-gold-soft: #b45309;
+  --c7-success: #16a34a;     --c7-success-rgb: 22,163,74;
+  --c7-danger: #e11d48;      --c7-danger-rgb: 225,29,72;
+  --text: #0f172a;
+  color: #0f172a;
+}
+
+/* ── 2. Kill the fixed dark app gradient while the admin panel is mounted ── */
+body.admin-light-active,
+body.admin-light-active #root {
+  background: #f4f6f8 !important;
+  color: #0f172a;
+}
+/* Light scrollbar inside admin */
+.admin-light ::-webkit-scrollbar-track { background: #eef1f4; }
+.admin-light ::-webkit-scrollbar-thumb { background: #16a34a; }
+
+/* ── 3. Base text + surfaces ── */
+.admin-light { color: #0f172a; }
+
+/* text-white and its opacity variants → dark slate */
+.admin-light .text-white        { color: #0f172a !important; }
+.admin-light .text-white\/90    { color: rgba(15,23,42,0.90) !important; }
+.admin-light .text-white\/80    { color: rgba(15,23,42,0.80) !important; }
+.admin-light .text-white\/70    { color: rgba(15,23,42,0.70) !important; }
+.admin-light .text-white\/60    { color: rgba(15,23,42,0.62) !important; }
+.admin-light .text-white\/55    { color: rgba(15,23,42,0.58) !important; }
+.admin-light .text-white\/50    { color: rgba(15,23,42,0.55) !important; }
+.admin-light .text-white\/45    { color: rgba(15,23,42,0.52) !important; }
+.admin-light .text-white\/40    { color: rgba(15,23,42,0.50) !important; }
+.admin-light .text-white\/35    { color: rgba(15,23,42,0.46) !important; }
+.admin-light .text-white\/30    { color: rgba(15,23,42,0.44) !important; }
+.admin-light .text-white\/25    { color: rgba(15,23,42,0.40) !important; }
+.admin-light .text-white\/20    { color: rgba(15,23,42,0.38) !important; }
+.admin-light .text-white\/15    { color: rgba(15,23,42,0.30) !important; }
+.admin-light .text-white\/10    { color: rgba(15,23,42,0.26) !important; }
+
+/* borders */
+.admin-light .border-white\/30  { border-color: rgba(15,23,42,0.24) !important; }
+.admin-light .border-white\/15  { border-color: rgba(15,23,42,0.16) !important; }
+.admin-light .border-white\/10  { border-color: rgba(15,23,42,0.12) !important; }
+.admin-light .border-white\/5   { border-color: rgba(15,23,42,0.08) !important; }
+
+/* white fills → faint slate fills */
+.admin-light .bg-white\/20      { background-color: rgba(15,23,42,0.08) !important; }
+.admin-light .bg-white\/10      { background-color: rgba(15,23,42,0.06) !important; }
+.admin-light .bg-white\/5       { background-color: rgba(15,23,42,0.04) !important; }
+.admin-light .bg-white\/\[0\.08\] { background-color: rgba(15,23,42,0.05) !important; }
+.admin-light .bg-white\/\[0\.04\] { background-color: rgba(15,23,42,0.035) !important; }
+
+/* rings */
+.admin-light .ring-white\/20    { --tw-ring-color: rgba(15,23,42,0.18) !important; }
+.admin-light .ring-white\/10    { --tw-ring-color: rgba(15,23,42,0.12) !important; }
+.admin-light .ring-white\/5     { --tw-ring-color: rgba(15,23,42,0.08) !important; }
+
+/* ── 4. Accent text: light neon tints → readable dark tints on white ── */
+.admin-light .text-emerald-100  { color: #065f46 !important; }
+.admin-light .text-emerald-200  { color: #047857 !important; }
+.admin-light .text-emerald-300  { color: #059669 !important; }
+.admin-light .text-emerald-400  { color: #059669 !important; }
+.admin-light .text-amber-300    { color: #b45309 !important; }
+.admin-light .text-amber-400    { color: #b45309 !important; }
+.admin-light .text-cyan-300     { color: #0e7490 !important; }
+.admin-light .text-cyan-400     { color: #0e7490 !important; }
+.admin-light .text-rose-300     { color: #be123c !important; }
+.admin-light .text-rose-400     { color: #be123c !important; }
+.admin-light .text-sky-300      { color: #0369a1 !important; }
+.admin-light .text-sky-400      { color: #0369a1 !important; }
+
+/* hover states that reveal full-white text → dark on light */
+.admin-light .hover\:text-white:hover { color: #0f172a !important; }
+
+/* Card default surface helper (optional class components can opt into) */
+.admin-light .av8-surface { background: #ffffff; border: 1px solid rgba(15,23,42,0.10); }

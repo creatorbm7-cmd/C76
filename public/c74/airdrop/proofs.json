@@ -1,0 +1,46 @@
+{
+  "merkleRoot": "0x7117c8f29ee8817b55e8bfcc84f544aa04c3ce6c318421d628805f17309c7d48",
+  "decimals": 18,
+  "tokenTotal": "11000000000000000000000",
+  "tokenTotalHuman": 11000.0,
+  "numClaims": 4,
+  "leafEncoding": "keccak256(abi.encodePacked(uint256 index, address account, uint256 amount))",
+  "claims": {
+    "TJnopnkc63XedW4PGNXCdqRH5R1XgqJBYT": {
+      "index": 0,
+      "amount": "5000000000000000000000",
+      "amountHuman": 5000.0,
+      "proof": [
+        "0x382e58ee76e91fa763c26d8558bec463ce74ec402f80285a9fdc9ac689c6e35f",
+        "0x2db94db3320fbf1e2d52265e16b4f4bb61525e05f764bd5fcafce66011921f97"
+      ]
+    },
+    "TM5YWaYV41pZb9EMGjGBbMQcsTZLBLAE3W": {
+      "index": 1,
+      "amount": "3000000000000000000000",
+      "amountHuman": 3000.0,
+      "proof": [
+        "0xce565f5c93f6fe418130495d579e9a8ab29b9e312e6404397c352682d3ee8f59",
+        "0x2db94db3320fbf1e2d52265e16b4f4bb61525e05f764bd5fcafce66011921f97"
+      ]
+    },
+    "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t": {
+      "index": 2,
+      "amount": "2000000000000000000000",
+      "amountHuman": 2000.0,
+      "proof": [
+        "0x05642279187bf6af6ac34f9e4332c9c4d8cccab18194f8a1b811765be62a889a",
+        "0xd8b699681d2cfe3f9039331fed14720abcb9c197d6e7a3ed24b6bb9b48e265bc"
+      ]
+    },
+    "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8": {
+      "index": 3,
+      "amount": "1000000000000000000000",
+      "amountHuman": 1000.0,
+      "proof": [
+        "0x42010b50cac94a685aa88321b99ff60da92b831cc421da1d92b27d24b1099ffd",
+        "0xd8b699681d2cfe3f9039331fed14720abcb9c197d6e7a3ed24b6bb9b48e265bc"
+      ]
+    }
+  }
+}

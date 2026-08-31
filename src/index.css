@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === C7 WINNERS — Living Emerald Jungle theme (no gold — mint highlight) === */
+:root {
+  /* Page-level tokens (used by body) — Emerald Jungle */
+  --bg:        #0a140f;
+  --bg2:       #05100b;
+  --surface:   rgba(255,255,255,0.04);
+  --border:    rgba(255,255,255,0.10);
+  --red:       #21c07e;   /* legacy accent — mapped to jade (see backlog: rename) */
+  --orange:    #37e29a;   /* legacy accent — mapped to jade-soft */
+  --gold:      #e8c15a;   /* ancient gold */
+  --aqua:      #21c07e;   /* jade */
+  --emerald:   #21c07e;   /* jade */
+  --text:      #dce8df;   /* mist */
+  --text-dim:  rgba(220,232,223,0.6);
+  --radius:    12px;      /* R5.1 keeps radius; stone 4px lands with R5.3 components */
+
+  /* DTX legacy tokens — retinted to the UONO Orange+Black palette so the legacy
+     DTX pages (bonuses, /dtx/wallet, settings, VIP, refer) match the UI. */
+  --dtx-bg:           150 33% 6%;     /* jungle-night ground */
+  --dtx-panel:        150 28% 10%;    /* carved-stone surface */
+  --dtx-panel-2:      150 25% 14%;    /* elevated stone */
+  --dtx-border:       154 45% 33%;    /* jade-tinted border */
+  --dtx-text:         140 18% 89%;    /* mist */
+  --dtx-muted:        145 13% 66%;    /* mist-dim */
+  --dtx-mint:         154 71% 44%;    /* jade (primary accent) */
+  --dtx-mint-bright:  153 73% 55%;    /* jade-soft */
+  --dtx-win:          153 73% 55%;    /* success jade */
+  --dtx-loss:         9 77% 60%;      /* coral danger */
+  --dtx-gold:         44 74% 63%;     /* ancient gold (glyphs/rare) */
+  --dtx-orange:       25 55% 50%;     /* copper (temple metal / coins) */
+  --dtx-cyan:         154 71% 44%;    /* jade accent */
+  --dtx-purple:       154 71% 44%;    /* jade */
+  --dtx-red-hot:      9 77% 60%;      /* coral */
+  --dtx-neon-pink:    9 77% 58%;      /* coral */
+  --dtx-green-win:    153 73% 55%;    /* success jade */
+  --dtx-gradient-cta:  linear-gradient(135deg, #21c07e 0%, #159861 100%);
+  --dtx-gradient-gold: linear-gradient(135deg, #e8c15a 0%, #c68a2e 100%);
+}
+
+/* ===== App palette — UONO Orange + Black (the only theme) ===== *
+ * Surfaces use var(--c7-*); -rgb variants feed rgba(var(--x), a). */
+/* ── R5 "Temple of the Jade Jaguar" — semantic palette (single source of truth).
+   Legacy --c7-* names alias these tokens, so no component needs to change. ── */
+:root {
+  /* accents */
+  --accent-jade:        #21c07e;
+  --accent-jade-soft:   #37e29a;
+  --accent-jade-deep:   #159861;
+  --accent-copper:      #c6763a;
+  --accent-copper-soft: #e49a5a;
+  --accent-gold:        #e8c15a;   /* glyphs & numerals only */
+  /* surfaces — jungle night → carved stone */
+  --surface-ground:     #0a140f;
+  --surface-primary:    #12201a;
+  --surface-elevated:   #1a2c22;
+  --surface-raised:     #213629;
+  /* text — mist */
+  --text-primary:       #dce8df;
+  --text-muted:         #9db3a4;
+  --text-faint:         #64796b;
+  /* semantic status */
+  --success:            #37e29a;
+  --danger:             #e86a5a;
+}
+
+:root, [data-theme="yono"] {
+  /* C7 — R5 Jade Temple (legacy --c7-* names alias the semantic palette above) */
+  --c7-bg: var(--surface-ground);          --c7-bg-rgb: 10,20,15;
+  --c7-surface: var(--surface-elevated);
+  --c7-primary: var(--accent-jade);        --c7-primary-rgb: 33,192,126;
+  --c7-primary-dark: var(--accent-jade-deep);
+  --c7-teal: var(--accent-jade-soft);      --c7-teal-rgb: 55,226,154;
+  --c7-accent: var(--accent-jade-soft);    --c7-accent-rgb: 55,226,154;
+  --c7-gold: var(--accent-copper);         --c7-gold-rgb: 198,118,58;
+  --c7-gold-soft: var(--accent-copper-soft);
+  --c7-success: var(--success);            --c7-success-rgb: 55,226,154;
+  --c7-danger: var(--danger);              --c7-danger-rgb: 232,106,90;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  min-height: 100vh;      /* fallback for browsers without dvh */
+  min-height: 100dvh;     /* match the real mobile viewport (address-bar safe) */
+  max-width: 100%;
+  overflow-x: clip;       /* global guard against accidental sideways scroll (keeps sticky working) */
+  background: radial-gradient(120% 60% at 50% -6%, rgba(47,226,154,0.10), transparent 55%), linear-gradient(180deg, #0a140f 0%, #05100b 100%) !important;
+  /* Solid emerald base COLOUR (the shorthand above only sets a gradient image and
+     leaves background-color transparent). iOS Safari fills the overscroll region
+     and the area behind fixed elements with html's background-color, so without
+     this it shows white behind the fixed bottom nav. Emerald matches the theme. */
+  background-color: #0a3d29 !important;
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar — recoloured to c7 aqua */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0a140f; }
+::-webkit-scrollbar-thumb { background: #21c07e; border-radius: 2px; }
+
+/* No scrollbar utility */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Safe area */
+.safe-top    { padding-top: env(safe-area-inset-top, 0px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }

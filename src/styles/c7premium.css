@@ -1,0 +1,399 @@
+/* ============================================================================
+   C7 WINNERS — Premium 3D Casino theme layer.
+   Reusable, namespaced (.c7p-*) primitives so every page (Home, Games, Wheel,
+   Wallet, Profile, Promotions) shares ONE luxury green-felt + gold-foil look.
+   Pure CSS, GPU-cheap (gradients + box-shadow only) — 60fps on low-end Android.
+   Builds on existing tokens: --c7-gold, --c7-primary, --c7-bg, etc.
+   ========================================================================== */
+
+:root {
+  /* R5 Jade Temple — ancient-gold ornament ramp (jackpot / premium / rare) */
+  --c7p-gold-1: #f6e6b0;
+  --c7p-gold-2: #e8c15a;
+  --c7p-gold-3: #c68a2e;
+  --c7p-gold-4: #7a5a1e;
+  /* jade ramp */
+  --c7p-green-1: #37e29a;
+  --c7p-green-2: #21c07e;
+  --c7p-green-3: #159861;
+  /* carved stone felt + panels */
+  --c7p-felt-hi: #21563c;
+  --c7p-felt-lo: #0a1a12;
+  --c7p-panel: #0b3220;    /* MASTER dark-green card base (deep emerald) */
+  --c7p-panel-2: #12492f;  /* card top — lifts on the deep .c7p-page ground */
+  --c7p-hair: rgba(232,193,90,0.28);   /* ancient-gold hairline */
+}
+
+/* ── Cinematic engraved title system (shared wordmark, per-page tint) ──────
+   Raised-metal treatment: a tinted face + layered bevel/extrude shadows + an
+   ambient glow. Uses text-shadow (not background-clip) so inline emoji stay
+   visible, and a doubled-class selector so it reliably wins over a page's own
+   title styles. Tint via .tt-* setting the --tt-* custom properties. */
+:root {
+  --tt-ink: #ffdf8a; --tt-hi: rgba(255,246,214,0.6); --tt-lo: #7a4e0e; --tt-glow: rgba(246,201,69,0.55);
+}
+.c7p-title.c7p-title {
+  color: var(--tt-ink); -webkit-text-fill-color: var(--tt-ink);
+  letter-spacing: 0.6px; text-wrap: balance;
+  text-shadow:
+    0 -1px 0 var(--tt-hi),
+    0 1px 0 var(--tt-lo),
+    0 2px 0 rgba(0,0,0,0.4),
+    0 3px 7px rgba(0,0,0,0.45),
+    0 0 20px var(--tt-glow);
+}
+.tt-gold    { --tt-ink:#ffdf8a; --tt-hi:rgba(255,246,214,0.6);  --tt-lo:#7a4e0e; --tt-glow:rgba(246,201,69,0.55); }
+.tt-emerald { --tt-ink:#8dffca; --tt-hi:rgba(220,255,240,0.55); --tt-lo:#0a5236; --tt-glow:rgba(55,226,154,0.5); }
+.tt-red     { --tt-ink:#ff9e86; --tt-hi:rgba(255,232,222,0.5);  --tt-lo:#7a170a; --tt-glow:rgba(255,90,60,0.5); }
+.tt-ice     { --tt-ink:#b8f0ff; --tt-hi:rgba(235,255,255,0.5);  --tt-lo:#14506e; --tt-glow:rgba(103,232,249,0.5); }
+
+/* Gold-foil text (section titles, jackpot numerals) */
+.c7p-gold-text {
+  background: linear-gradient(180deg, var(--c7p-gold-1) 0%, var(--c7p-gold-2) 45%, var(--c7p-gold-3) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.4));
+}
+
+/* ── Felt page background — MASTER deep-emerald table (Lucky Wheel palette).
+   Rich dark emerald ground with a subtle gold top glow + emerald bloom, so the
+   whole app reads as one premium dark-emerald+gold ecosystem (not bright neon).
+   This is the single source of truth — every .c7p-page inherits it. */
+.c7p-page {
+  background:
+    radial-gradient(120% 65% at 50% -8%, rgba(246,201,69,0.12), transparent 58%),
+    radial-gradient(110% 55% at 50% 0%, rgba(46,224,138,0.11), transparent 60%),
+    linear-gradient(172deg, #0d3d28 0%, #072517 46%, #04160d 100%);
+}
+
+/* ── Panel: dark green glass card with gold hairline + soft depth ────────── */
+.c7p-panel {
+  position: relative;
+  background:
+    radial-gradient(125% 88% at 0% 0%, rgba(246,201,69,0.09), transparent 56%),
+    linear-gradient(180deg, var(--c7p-panel-2), var(--c7p-panel));
+  border: 1px solid var(--c7p-hair);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 0 22px rgba(0,0,0,0.35),
+    0 10px 24px -8px rgba(0,0,0,0.6);
+}
+
+/* Gold-framed feature card (Jackpot, VIP, headline promos) */
+.c7p-card-gold {
+  position: relative;
+  border-radius: 16px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(180deg, var(--c7p-panel-2), var(--c7p-panel)) padding-box,
+    linear-gradient(180deg, var(--c7p-gold-1), var(--c7p-gold-3) 55%, var(--c7p-gold-4)) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 22px -6px rgba(255,200,61,0.35),
+    0 12px 26px -10px rgba(0,0,0,0.7);
+}
+
+/* ── Glossy GOLD 3D button (DEPOSIT, GET MORE SPINS, SPIN&WIN, CTA) ───────── */
+.c7p-btn-gold {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; font-weight: 900; letter-spacing: 0.4px; color: #3a2600; cursor: pointer;
+  border: none; border-radius: 14px; padding: 12px 20px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+  background:
+    radial-gradient(120% 100% at 50% 12%, rgba(255,255,255,0.75), transparent 52%),
+    linear-gradient(180deg, var(--c7p-gold-1) 0%, var(--c7p-gold-2) 42%, var(--c7p-gold-3) 100%);
+  box-shadow:
+    0 5px 0 #a9760a, inset 0 2px 0 rgba(255,255,255,0.85),
+    inset 0 -8px 14px rgba(138,100,16,0.4), 0 12px 22px -6px rgba(255,200,61,0.55);
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.c7p-btn-gold:active { transform: translateY(4px); box-shadow: 0 1px 0 #a9760a, inset 0 2px 0 rgba(255,255,255,0.8); }
+.c7p-btn-gold:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Glossy GREEN 3D button (secondary CTA, Collect, Claim) */
+.c7p-btn-green {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; font-weight: 900; letter-spacing: 0.3px; color: #042a15; cursor: pointer;
+  border: 2px solid rgba(255,231,160,0.5); border-radius: 14px; padding: 12px 20px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  background:
+    radial-gradient(120% 100% at 50% 12%, rgba(255,255,255,0.6), transparent 50%),
+    linear-gradient(180deg, var(--c7p-green-1) 0%, var(--c7p-green-2) 58%, var(--c7p-green-3) 100%);
+  box-shadow:
+    0 5px 0 #063e21, inset 0 2px 0 rgba(255,255,255,0.7),
+    inset 0 -8px 14px rgba(0,0,0,0.28), 0 12px 22px -8px rgba(46,224,138,0.5);
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.c7p-btn-green:active { transform: translateY(4px); box-shadow: 0 1px 0 #063e21, inset 0 2px 0 rgba(255,255,255,0.7); }
+.c7p-btn-green:disabled { opacity: .55; cursor: not-allowed; }
+
+/* ══ Micro-interactions & motion (shared across all c7p surfaces) ═══════════ */
+
+/* Page transition — every .c7p-page fades + rises in on mount */
+@keyframes c7p-page-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.c7p-page { animation: c7p-page-in .42s cubic-bezier(.22,1,.36,1) both; }
+
+/* Buttons — hover lift + brighten, plus a one-shot sheen sweep on hover */
+.c7p-btn-gold, .c7p-btn-green { overflow: hidden; }
+.c7p-btn-gold::after, .c7p-btn-green::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 42%; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transform: skewX(-18deg); opacity: 0;
+  animation: c7p-btnglint 5.4s ease-in-out infinite;
+}
+@keyframes c7p-sheen { 0% { left: -60%; opacity: .85; } 100% { left: 130%; opacity: 0; } }
+/* periodic auto-glint so every primary gold/green button shimmers (not just on hover) */
+@keyframes c7p-btnglint { 0% { left: -60%; opacity: 0; } 6% { opacity: .6; } 20% { left: 130%; opacity: 0; } 100% { left: 130%; opacity: 0; } }
+@media (hover: hover) {
+  .c7p-btn-gold:hover, .c7p-btn-green:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .c7p-btn-gold:hover::after, .c7p-btn-green:hover::after { animation: c7p-sheen .7s ease; }
+}
+
+/* Interactive panels (used as a button/link) — press squash + hover glow */
+button.c7p-panel, a.c7p-panel, .c7p-panel[role="button"] {
+  cursor: pointer; transition: transform .12s cubic-bezier(.2,.9,.25,1.2), box-shadow .18s ease; }
+button.c7p-panel:active, a.c7p-panel:active, .c7p-panel[role="button"]:active { transform: scale(.985); }
+@media (hover: hover) {
+  button.c7p-panel:hover, a.c7p-panel:hover, .c7p-panel[role="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(255,214,120,0.35), 0 16px 30px -12px rgba(0,0,0,0.72); }
+}
+
+/* Gold feature cards — slow ambient breathing glow */
+@keyframes c7p-cardbreathe {
+  0%,100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 0 24px -6px rgba(255,200,61,0.42), 0 12px 26px -10px rgba(0,0,0,0.7); }
+  50%     { box-shadow: inset 0 1px 0 rgba(255,255,255,0.13), 0 0 42px -2px rgba(255,206,70,0.74), 0 12px 26px -10px rgba(0,0,0,0.7); } }
+.c7p-card-gold { animation: c7p-cardbreathe 4.5s ease-in-out infinite; }
+
+/* Reusable claim/success pop — add .c7p-pop when a reward is claimed */
+@keyframes c7p-pop { 0% { transform: scale(1); } 30% { transform: scale(1.12); } 55% { transform: scale(.97); } 100% { transform: scale(1); } }
+.c7p-pop { animation: c7p-pop .5s cubic-bezier(.34,1.56,.64,1); }
+
+/* Reusable coin/token glint — wrap a coin <img> to give it a slow rotating gold
+   shine-ring (the coin stays still + readable). e.g. <span class="c7p-coin-glint">…</span> */
+.c7p-coin-glint { position: relative; display: inline-flex; }
+.c7p-coin-glint::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; z-index: 0; pointer-events: none;
+  background: conic-gradient(from 0deg, transparent 0 54deg, rgba(255,238,160,0.6) 76deg, transparent 98deg 232deg, rgba(255,238,160,0.42) 256deg, transparent 280deg);
+  filter: blur(1.5px); animation: c7p-coinspin 3.1s linear infinite; }
+.c7p-coin-glint > * { position: relative; z-index: 1; }
+@keyframes c7p-coinspin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .c7p-page, .c7p-card-gold, .c7p-pop { animation: none !important; }
+  .c7p-btn-gold::after, .c7p-btn-green::after, .c7p-chip--gold::after, .c7p-coin-glint::before { display: none; }
+  .c7p-btn-gold:hover, .c7p-btn-green:hover,
+  button.c7p-panel:hover, a.c7p-panel:hover, .c7p-panel[role="button"]:hover { transform: none; }
+}
+
+/* ── Glossy round icon chip (quick-deposit UPI/GPay, nav icons, coin badges) ─ */
+.c7p-chip {
+  position: relative; display: grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 15px;
+  background:
+    radial-gradient(120% 100% at 50% 14%, rgba(255,255,255,0.16), transparent 55%),
+    linear-gradient(180deg, #123a24 0%, #0b2417 100%);
+  border: 1px solid var(--c7p-hair);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 6px 14px -6px rgba(0,0,0,0.7);
+}
+.c7p-chip--gold {
+  overflow: hidden;
+  background:
+    radial-gradient(120% 100% at 50% 12%, rgba(255,255,255,0.7), transparent 52%),
+    linear-gradient(180deg, var(--c7p-gold-1), var(--c7p-gold-2) 45%, var(--c7p-gold-3));
+  border-color: rgba(255,231,160,0.7);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.8), inset 0 -6px 10px rgba(138,100,16,0.35), 0 6px 14px -5px rgba(255,200,61,0.5);
+}
+/* periodic gold glint on feature/reward gold chips (reuses c7p-btnglint) */
+.c7p-chip--gold::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 48%; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); transform: skewX(-18deg); opacity: 0;
+  animation: c7p-btnglint 5.4s ease-in-out infinite;
+}
+
+/* ── 3D game tile with gloss, gold frame & badge ─────────────────────────── */
+.c7p-tile {
+  position: relative; border-radius: 16px; overflow: hidden;
+  background: linear-gradient(180deg, #0f3020, #0a2016);
+  border: 1px solid var(--c7p-hair);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    0 8px 18px -8px rgba(0,0,0,0.7);
+  transition: transform .16s cubic-bezier(.2,.9,.25,1.2), box-shadow .16s;
+}
+.c7p-tile::after { /* top gloss sweep */
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), transparent 34%);
+}
+.c7p-tile:active { transform: translateY(2px) scale(0.98); }
+.c7p-tile:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(255,214,120,0.4), 0 14px 26px -10px rgba(0,0,0,0.8); }
+
+.c7p-badge {
+  position: absolute; top: 6px; left: 6px; z-index: 3;
+  font-size: 9px; font-weight: 900; letter-spacing: 0.5px; color: #fff;
+  padding: 2px 7px; border-radius: 8px; text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.c7p-badge--hot { background: linear-gradient(180deg, #ff6a3d, #d1281f); }
+.c7p-badge--new { background: linear-gradient(180deg, #37e29a, #159861); }
+
+/* ── Section title bar (gold rule + label) ───────────────────────────────── */
+.c7p-section-title {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+}
+.c7p-section-title::before {
+  content: ""; width: 4px; height: 15px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--c7p-gold-1), var(--c7p-gold-3));
+  box-shadow: 0 0 8px rgba(255,200,61,0.7);
+}
+
+/* ── VIP / progress bar ──────────────────────────────────────────────────── */
+.c7p-progress { height: 8px; border-radius: 99px; background: rgba(0,0,0,0.45);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.6); overflow: hidden; }
+.c7p-progress > span { display: block; height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--c7p-green-1), var(--c7p-gold-2));
+  box-shadow: 0 0 10px rgba(46,224,138,0.6); }
+
+/* Gold hairline divider */
+.c7p-divider { height: 1px; border: 0;
+  background: linear-gradient(90deg, transparent, var(--c7p-hair), transparent); }
+
+/* ── Page shell: shared layout primitives for inner pages ─────────────────── */
+.c7p-pg-root { min-height: 100vh; min-height: 100dvh; color: #fff; padding-bottom: calc(128px + env(safe-area-inset-bottom, 0px)); font-family: Inter, system-ui, sans-serif; }
+.c7p-pg-bar {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(6,26,16,0.95), rgba(6,26,16,0.55)); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,214,120,0.28);
+}
+.c7p-pg-back {
+  width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,214,120,0.3);
+  color: #ffe9a8; display: grid; place-items: center; cursor: pointer;
+}
+.c7p-pg-title { font-size: 18px; font-weight: 900; letter-spacing: 0.3px; }
+.c7p-pg-main { max-width: 520px; margin: 0 auto; padding: 16px; }
+
+/* Subtle shimmer for jackpot numerals / hot elements */
+@keyframes c7p-shine { 0%{background-position:-140% 0} 100%{background-position:140% 0} }
+.c7p-shine {
+  background-image: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+  background-size: 220% 100%; background-repeat: no-repeat;
+  -webkit-background-clip: text; background-clip: text;
+  animation: c7p-shine 2.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .c7p-shine { animation: none; } }
+
+/* ── Premium loading skeletons — ONE green+gold shimmer design language ────
+   Reusable primitives so every loading state reads as one ecosystem:
+   base line + variants (card / tile / circle-avatar / button). Emerald glass
+   base, gold→emerald shimmer sweep, gold hairline. Reduced-motion safe. */
+@keyframes c7p-skel-shim { 0% { background-position: 140% 0; } 100% { background-position: -40% 0; } }
+.c7p-skel { position: relative; overflow: hidden; border-radius: 10px;
+  background:
+    linear-gradient(100deg, transparent 20%, rgba(255,236,180,0.20) 42%, rgba(120,240,176,0.20) 52%, transparent 74%),
+    linear-gradient(180deg, rgba(18,58,36,0.55), rgba(11,36,23,0.6));
+  background-size: 300% 100%, 100% 100%; background-repeat: no-repeat;
+  border: 1px solid rgba(255,214,120,0.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: c7p-skel-shim 1.5s ease infinite; }
+.c7p-skel--card   { border-radius: 16px; }
+.c7p-skel--tile   { border-radius: 16px; aspect-ratio: 3/4; }
+.c7p-skel--circle { border-radius: 50%; border-color: rgba(255,214,120,0.3); }
+.c7p-skel--line   { border-radius: 6px; height: 12px; }
+.c7p-skel--btn    { border-radius: 14px; height: 40px; }
+@media (prefers-reduced-motion: reduce) { .c7p-skel { animation: none !important; } }
+
+/* ============================================================================
+   V3 HOME canonical tokens + signature primitives — the single source of truth
+   for the polished lobby look (brighter emerald stage + gold-foil). ADDITIVE:
+   all names are new, so no existing .c7p-* rule or page changes. Inner pages
+   opt in to match Home. GPU-cheap (gradient/shadow/opacity), reduced-motion safe.
+   ========================================================================== */
+:root {
+  /* emerald stage (matches V3Lobby .v3-bg) */
+  --c7p-emerald-hi: #1cb476;
+  --c7p-emerald-mid: #12925c;
+  --c7p-emerald-lo: #0b6b43;
+  --c7p-ink: #eafff4;                       /* primary text on emerald */
+  --c7p-ink-soft: rgba(230,246,236,0.82);
+  /* bright gold ramp (the home's foil — brighter than the copper --c7p-gold-1..4) */
+  --c7p-gold: #f6c945;
+  --c7p-gold-lite: #ffe9a8;
+  --c7p-gold-hi: #fff6d5;
+  --c7p-gold-deep: #c6851e;
+  /* glass + hairlines */
+  --c7p-glass: linear-gradient(160deg, rgba(16,66,42,0.62), rgba(4,22,14,0.80));
+  --c7p-glass-blur: blur(8px);
+  --c7p-hairline: rgba(0,168,107,0.30);
+  --c7p-hairline-gold: rgba(246,201,69,0.42);
+  /* elevation + radius */
+  --c7p-shadow-card: 0 8px 22px -14px rgba(0,0,0,0.8);
+  --c7p-shadow-float: 0 9px 20px -8px rgba(0,0,0,0.82), 0 3px 7px -3px rgba(0,0,0,0.6);
+  --c7p-radius: 16px;
+}
+
+/* Frosted emerald glass card (home wallet/VIP-hub language) */
+.c7p-glass {
+  border-radius: var(--c7p-radius);
+  border: 1px solid var(--c7p-hairline-gold);
+  background:
+    radial-gradient(125% 88% at 0% 0%, rgba(246,201,69,0.08), transparent 56%),
+    var(--c7p-glass);
+  backdrop-filter: var(--c7p-glass-blur); -webkit-backdrop-filter: var(--c7p-glass-blur);
+  box-shadow: inset 0 1.5px 0 rgba(255,244,214,0.14), var(--c7p-shadow-card);
+}
+
+/* Animated gold-gradient border ring (the home VIP-card treatment). Put on a
+   position:relative, border-radius'd element; the ring paints on ::before via
+   the mask trick so it never clips the corner radius. */
+.c7p-goldring { position: relative; }
+.c7p-goldring::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 2;
+  background: linear-gradient(135deg, var(--c7p-gold-hi) 0%, var(--c7p-gold) 28%, var(--c7p-gold-deep) 50%, var(--c7p-gold-lite) 74%, var(--c7p-gold) 100%);
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: c7p-goldring 6s ease-in-out infinite;
+}
+@keyframes c7p-goldring { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* Gold glow-pulse (home "Unlock Lv" pill / top-up + button) */
+@keyframes c7p-goldpulse {
+  0%,100% { box-shadow: 0 2px 6px -2px rgba(246,201,69,0.6), inset 0 1px 0 rgba(255,255,255,0.5); }
+  50%     { box-shadow: 0 2px 11px -1px rgba(246,201,69,0.95), 0 0 16px -2px rgba(255,210,77,0.85), inset 0 1px 0 rgba(255,255,255,0.6); }
+}
+.c7p-goldpulse { animation: c7p-goldpulse 2.4s ease-in-out infinite; }
+
+/* Signature section header (home .v3-sec style): tinted icon chip + gradient-text
+   label + gold rule. Richer than .c7p-section-title; use for premium page sections. */
+.c7p-sec { display: flex; align-items: center; gap: 10px; margin: 20px 2px 11px; }
+.c7p-sec-ic { flex: none; width: 27px; height: 27px; border-radius: 9px; display: grid; place-items: center; font-size: 14px; line-height: 1;
+  background: radial-gradient(120% 120% at 50% 0%, #b6ffdd, var(--c7p-emerald-hi) 52%, var(--c7p-emerald-lo));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.34), inset 0 -3px 6px rgba(0,60,36,0.4), inset 0 0 0 1px rgba(255,255,255,0.12), 0 0 0 1px rgba(246,201,69,0.3), 0 4px 12px -5px rgba(0,0,0,0.6); }
+.c7p-sec-t { font-size: 12.5px; font-weight: 900; letter-spacing: 1.6px; text-transform: uppercase; white-space: nowrap;
+  background: linear-gradient(180deg, var(--c7p-gold-hi), var(--c7p-gold-lite) 55%, var(--c7p-gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 1px 2px rgba(0,0,0,0.25); }
+.c7p-sec-rule { flex: 1; height: 2px; border-radius: 2px; opacity: 0.6; background: linear-gradient(90deg, var(--c7p-hairline-gold), transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .c7p-goldring::before, .c7p-goldpulse { animation: none; }
+}
+
+/* ── Premium pass (additive): extend interactive depth to GOLD feature cards ──
+   Interactive .c7p-panel already lifts/presses (above). Gold feature cards used
+   as a button/link had no press/hover state — give them one (transform only, so
+   it composes with the ambient breathe glow), plus a gold focus ring for a11y. */
+button.c7p-card-gold, a.c7p-card-gold, .c7p-card-gold[role="button"] {
+  cursor: pointer; transition: transform .16s cubic-bezier(.2,.9,.25,1.2);
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  button.c7p-card-gold:hover, a.c7p-card-gold:hover, .c7p-card-gold[role="button"]:hover { transform: translateY(-3px); }
+}
+button.c7p-card-gold:active, a.c7p-card-gold:active, .c7p-card-gold[role="button"]:active { transform: scale(.985); }
+button.c7p-panel:focus-visible, a.c7p-panel:focus-visible,
+button.c7p-card-gold:focus-visible, a.c7p-card-gold:focus-visible {
+  outline: 2px solid rgba(255,214,120,0.9); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  button.c7p-card-gold, a.c7p-card-gold, .c7p-card-gold[role="button"] { transition: none; }
+  button.c7p-card-gold:active, a.c7p-card-gold:active, .c7p-card-gold[role="button"]:active { transform: none; }
+}

@@ -1,0 +1,29 @@
+# C7 Casinos
+
+> Premium crypto casino with provably-fair games, real-time payouts, and full on-chain transparency.
+
+C7 Casinos (Season Casinos) is a next-generation crypto casino offering
+provably-fair games on USDT, ETH, BTC and BNB. Every game round is
+HMAC-SHA256 verifiable, deposits and withdrawals are on-chain, and the
+platform supports Web3 wallets (MetaMask, WalletConnect) alongside
+email auth.
+
+## Pages
+
+- [Home](/): Landing page with featured games, live wins ticker and bonus offers.
+- [Login](/login): Email or wallet sign-in.
+- [Blog](/blog): Crypto, casino strategy, news and how-to guides.
+- [Privacy Policy](/privacy): How we handle user data.
+- [Terms of Service](/terms): Player terms and conditions.
+
+## Games
+
+C7 Casinos ships nine provably-fair in-house games: Plinko, Mines,
+Crash, Dice, Wheel, Limbo, Hilo, Keno and Coinflip. All bets settle
+server-side via Supabase Edge Functions; client seeds are user-rotatable
+and server seeds are revealed after each round.
+
+## Optional
+
+- [Provably Fair](/dtx/provably-fair): Verify any past round.
+- [Responsible Gaming](/dtx/responsible-gaming): Player protection tools.

@@ -1,0 +1,672 @@
+/* Premium C74 interaction layer — shared by every .ig page.
+ * Communicates interaction and premium quality; does NOT animate everything.
+ * All motion is reduced-motion safe (disabled below). Presentation only. */
+
+@keyframes ig-sheen { 0% { background-position: 220% 0; } 100% { background-position: -220% 0; } }
+@keyframes ig-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes ig-coin-sheen { 0% { transform: translateX(-120%) rotate(8deg); } 60%, 100% { transform: translateX(220%) rotate(8deg); } }
+@keyframes ig-navpop { from { transform: scaleX(0.2); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+/* Subtle press depth on any tappable surface in the premium app. */
+.ig button:not(:disabled):active,
+.ig a:active { transform: translateY(1px); }
+
+/* Moving gold sheen — apply to a marquee gold value/headline (text). */
+.ig .ig-sheen {
+  background-image: linear-gradient(100deg, #c68a2e 0%, #f0c94a 28%, #fff6d5 44%, #f0c94a 60%, #c68a2e 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  animation: ig-sheen 6.5s linear infinite;
+}
+/* Gentle float for a hero 3D-art PNG. */
+.ig .ig-float { animation: ig-float 5.5s ease-in-out infinite; will-change: transform; }
+
+/* Active bottom-nav response: the gold underline sweeps in. */
+.ig-nav-i.on::before { animation: ig-navpop .28s cubic-bezier(.2,.8,.25,1) both; }
+/* C74 coin brand tab — a controlled sheen crosses the coin. */
+.ig-nav-c74 { position: relative; overflow: hidden; }
+.ig-nav-c74::after {
+  content: ""; position: absolute; top: -40%; left: 0; width: 45%; height: 180%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.75), transparent);
+  animation: ig-coin-sheen 4.5s ease-in-out infinite; pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-sheen,
+  .ig .ig-float,
+  .ig-nav-i.on::before,
+  .ig-nav-c74::after { animation: none !important; }
+  .ig button:not(:disabled):active,
+  .ig a:active { transform: none; }
+  .ig-nav-c74::after { display: none; }
+}
+
+/* ===================================================================
+   Status ribbons — premium notched-flag banners (LIVE/NEW/HOT/TOP/
+   BEST/EVENT/JACKPOT). Crisp CSS so they stay sharp at any size and
+   theme cleanly. Presentation only. See <IgRibbon>. */
+.ig-ribbon {
+  position: relative; display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; font-size: 10px; font-weight: 900; letter-spacing: 0.7px;
+  text-transform: uppercase; color: #fff5d6; line-height: 1; white-space: nowrap;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 50%, 100% 100%, 0 100%, 7px 50%);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.32), inset 0 -3px 6px rgba(0,0,0,0.32), 0 3px 8px -3px rgba(0,0,0,0.6);
+}
+.ig-ribbon::before { content: "★"; font-size: 8px; color: #ffe9a8; filter: drop-shadow(0 0 3px rgba(240,201,74,0.8)); }
+.ig-ribbon b {
+  font-weight: 900;
+  background: linear-gradient(180deg, #fff6d5, #f7e08a 60%, #e6bf55);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ig-ribbon.sm { padding: 3px 9px; font-size: 8.5px; letter-spacing: 0.5px;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 5px) 50%, 100% 100%, 0 100%, 5px 50%); }
+.ig-ribbon.ig-rb-live    { background: linear-gradient(180deg, #f0555f, #c41f2c 60%, #8f101a); }
+.ig-ribbon.ig-rb-new     { background: linear-gradient(180deg, #37c26a, #1a8f43 60%, #0c6a2e); }
+.ig-ribbon.ig-rb-hot     { background: linear-gradient(180deg, #ff8a3c, #ef5a1f 60%, #c53d0c); }
+.ig-ribbon.ig-rb-top     { background: linear-gradient(180deg, #a765e6, #7d3fc4 60%, #5a2596); }
+.ig-ribbon.ig-rb-best    { background: linear-gradient(180deg, #4aa3f0, #2b74d6 55%, #1652a8); }
+.ig-ribbon.ig-rb-event   { background: linear-gradient(180deg, #f065a6, #d63c86 60%, #a8256a); }
+.ig-ribbon.ig-rb-jackpot { background: linear-gradient(180deg, #ffd76a, #f0b429 55%, #c1830f); }
+.ig-ribbon.ig-rb-jackpot b { background: linear-gradient(180deg,#5a3d08,#3a2708); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ig-ribbon.ig-rb-jackpot::before { color: #7a5a1e; }
+
+/* ===================================================================
+   Premium icon medallion — shared emerald/gold circular icon frame used
+   to lift plain glyphs (VIP tiers, Invite stats) to the C74 look.
+   Presentation only. */
+.ig-emblem { display:grid; place-items:center; border-radius:50%; flex:0 0 auto; color:#ffe9a8; line-height:1;
+  background:radial-gradient(120% 120% at 50% 16%, #1e6440, #0a2416 74%);
+  border:1px solid rgba(240,201,74,0.42);
+  box-shadow:inset 0 1px 0 rgba(246,230,176,0.16), 0 5px 12px -5px rgba(0,0,0,0.6); }
+.ig-emblem--gold { color:#3a2708;
+  background:radial-gradient(120% 120% at 50% 18%, #fff3c8, #f0c94a 54%, #c68a2e 100%);
+  border-color:#7a5a1e; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 5px 12px -5px rgba(240,201,74,0.55); }
+.ig-emblem--ring { box-shadow:inset 0 1px 0 rgba(246,230,176,0.16), 0 0 0 2px rgba(240,201,74,0.28), 0 5px 14px -5px rgba(240,201,74,0.6); }
+
+/* VipCrest specular shine — slow gold sweep across the emblem. */
+.vip-crest-shine { opacity:0; animation: vip-crest-sheen 5s ease-in-out infinite; }
+@keyframes vip-crest-sheen { 0%,72%,100% { opacity:0; } 40%,52% { opacity:0.85; } }
+@media (prefers-reduced-motion: reduce) { .vip-crest-shine { animation:none; opacity:0; } }
+
+/* Centered page-crest hero — a bespoke emblem on a dark disc atop pages that
+   have no natural hero card (Missions / Analytics / Deposit). */
+.igct-hero { display:flex; flex-direction:column; align-items:center; gap:7px; margin:2px 0 15px; }
+.igct-disc { width:94px; height:94px; border-radius:50%; display:grid; place-items:center; flex:0 0 auto;
+  background:radial-gradient(120% 120% at 50% 16%, #1e6440, #061a10 74%); border:1px solid rgba(240,201,74,0.42);
+  box-shadow:inset 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(246,230,176,0.25), 0 8px 18px -7px rgba(0,0,0,0.6); }
+.igct-disc .vip-crest { width:82%; height:82%; filter:drop-shadow(0 3px 5px rgba(0,0,0,0.45)); }
+.igct-sub { font-size:12px; font-weight:700; color:var(--mut); text-align:center; }
+
+/* Premium emblem hero — a hi-res ornate crest banner centered atop a hub page. */
+.ige-hero { display:flex; flex-direction:column; align-items:center; gap:6px; margin:4px 0 15px; }
+.ige-hero img { width:min(272px,76%); height:auto; display:block; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+
+/* ===================================================================
+   GOLD LINES REMOVED (per request) — the earlier "rich gold frame" look
+   (gold-gradient card borders, top accent line, parallel edge-to-edge
+   side lines, gold top-bar underline, gold dividers, gold frames on the
+   balance chip and outline pills) has been taken out completely. Cards
+   keep the emerald glass surface but with a clean neutral hairline; no
+   gold lines anywhere. Motion/glow glamour elsewhere is untouched.
+   Presentation only; layout-neutral. */
+
+/* Card surface — emerald glass with a neutral hairline (no gold frame). */
+.ig .ig-post {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: linear-gradient(180deg, rgba(18,63,41,0.92), rgba(8,30,19,0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 18px 40px -20px rgba(0,0,0,0.85);
+}
+/* gold top accent line removed */
+.ig .ig-post::before { content: none !important; }
+
+/* Content column — parallel gold side lines removed. */
+.ig .ig-main {
+  position: relative;
+  box-shadow: none;
+}
+
+/* Sticky top bar — gold underline removed; plain neutral hairline. */
+.ig .ig-top { border-bottom-color: rgba(255,255,255,0.08) !important; position: relative; }
+.ig .ig-top::after { content: none !important; }
+
+/* Story-row / section dividers — neutral hairline (no gold). */
+.ig .ig-stories { border-bottom-color: rgba(255,255,255,0.08) !important; }
+
+/* ── Balance chip + outline pills — gold frames removed, neutral hairline ── */
+.ig .ig-bal {
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  background: linear-gradient(180deg, rgba(18,73,47,0.92), rgba(7,32,20,0.94)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06) !important;
+}
+.ig .ig-pill:not(.ig-pill--solid) {
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: linear-gradient(180deg, rgba(9,32,20,0.72), rgba(9,32,20,0.5)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+}
+
+/* Living story ring — the conic gold/emerald halo slowly spins behind the icon
+   (the icon itself stays still). "Jeevan ulla" premium motion. */
+@keyframes ig-ringspin { to { transform: rotate(360deg); } }
+.ig .ig-story-av.ring { background: transparent !important; position: relative; }
+.ig .ig-story-av.ring::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; z-index: 0; pointer-events: none;
+  background: conic-gradient(from 0deg, #f6c945, #37e29a, #0e7a4a, #fff6d5, #f6c945);
+  animation: ig-ringspin 5.5s linear infinite; will-change: transform;
+}
+.ig .ig-story-av.ring .ig-story-in,
+.ig .ig-story-av.ring .ig-story-badge { position: relative; z-index: 1; }
+
+/* Living brand title — the logo gold sweeps a slow shimmer. */
+@keyframes ig-titleshimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.ig .ig-logo b {
+  background-image: linear-gradient(100deg, #c68a2e 0%, #f0c94a 26%, #fff6d5 44%, #f0c94a 62%, #c68a2e 100%) !important;
+  background-size: 220% 100% !important;
+  animation: ig-titleshimmer 7s linear infinite;
+}
+
+/* Rich buttons — a specular shine sweeps across the gold/green CTAs. */
+@keyframes ig-btnshine { 0% { transform: translateX(-150%) skewX(-18deg); } 55%, 100% { transform: translateX(260%) skewX(-18deg); } }
+.ig .ig-cta, .ig .ig-bonus-cta, .ig .ig-bal-plus { position: relative; overflow: hidden; }
+.ig .ig-cta::after, .ig .ig-bonus-cta::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 34%; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  animation: ig-btnshine 4.8s ease-in-out infinite;
+}
+
+/* Living story icons — each avatar gently bobs (staggered so the row feels
+   alive, not marching in sync) and the ring/badge glow softly breathes. */
+@keyframes ig-storyfloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes ig-storyglow {
+  0%, 100% { filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45)); transform: scale(1); }
+  50%      { filter: drop-shadow(0 4px 15px rgba(240,201,74,0.8)); transform: scale(1.07); }
+}
+.ig .ig-stories .ig-story .ig-story-av { animation: ig-storyfloat 3.4s ease-in-out infinite; will-change: transform; }
+.ig .ig-stories .ig-story:nth-child(2) .ig-story-av { animation-delay: .22s; }
+.ig .ig-stories .ig-story:nth-child(3) .ig-story-av { animation-delay: .44s; }
+.ig .ig-stories .ig-story:nth-child(4) .ig-story-av { animation-delay: .66s; }
+.ig .ig-stories .ig-story:nth-child(5) .ig-story-av { animation-delay: .88s; }
+.ig .ig-stories .ig-story:nth-child(6) .ig-story-av { animation-delay: 1.1s; }
+.ig .ig-stories .ig-story:nth-child(7) .ig-story-av { animation-delay: 1.32s; }
+/* the 3D badge art breathes a warm gold glow on top of its bob */
+.ig .ig-stories .ig-story-badge { animation: ig-storyglow 3.8s ease-in-out infinite; }
+
+/* Reel-spin — each coin/badge slowly spins IN-PLANE (rotateZ) like a turning
+   medallion. Flat rotation never mirrors the art, so any text inside (C74,
+   777, …) stays crisp and readable the whole way round — a pro coin-spin, not
+   a 3D flip. Staggered so the row reads as a live reel bank. */
+@keyframes ig-reelspin { to { transform: rotate(360deg); } }
+.ig .ig-stories .ig-story-badge img {
+  animation: ig-reelspin 3s linear infinite; will-change: transform;
+}
+/* stronger glow breathing cadence for the power tune */
+.ig .ig-stories .ig-story-badge { animation-duration: 2.6s; }
+.ig .ig-stories .ig-story:nth-child(3) .ig-story-badge img { animation-delay: .34s; }
+.ig .ig-stories .ig-story:nth-child(4) .ig-story-badge img { animation-delay: .68s; }
+.ig .ig-stories .ig-story:nth-child(5) .ig-story-badge img { animation-delay: 1.02s; }
+.ig .ig-stories .ig-story:nth-child(6) .ig-story-badge img { animation-delay: 1.36s; }
+.ig .ig-stories .ig-story:nth-child(7) .ig-story-badge img { animation-delay: 1.70s; }
+.ig .ig-stories .ig-story:nth-child(8) .ig-story-badge img { animation-delay: 2.04s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-story-av.ring::before,
+  .ig .ig-logo b,
+  .ig .ig-cta::after,
+  .ig .ig-bonus-cta::after,
+  .ig .ig-stories .ig-story .ig-story-av,
+  .ig .ig-stories .ig-story-badge,
+  .ig .ig-stories .ig-story-badge img { animation: none !important; }
+}
+
+/* ===================================================================
+   GLAMOUR LAYER — extra sparkle for every .ig route. A glass light-sweep
+   glides across each card, story coins twinkle a tiny star, and the gold
+   frame carries a soft outer halo. All shared, layout-neutral, reduced-
+   motion safe. */
+
+/* Glass shine — a diagonal light periodically glides across each card. */
+@keyframes ig-cardsheen { 0%, 16% { transform: translateX(-135%) skewX(-14deg); } 60%, 100% { transform: translateX(255%) skewX(-14deg); } }
+.ig .ig-post::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 55%; z-index: 2; pointer-events: none;
+  background: linear-gradient(105deg, transparent 34%, rgba(255,246,213,0.13) 47%, rgba(255,255,255,0.22) 50%, rgba(255,246,213,0.13) 53%, transparent 66%);
+  transform: translateX(-135%) skewX(-14deg);
+  animation: ig-cardsheen 7s ease-in-out infinite;
+}
+.ig .ig-post:nth-of-type(2n)::after { animation-delay: 1.6s; }
+.ig .ig-post:nth-of-type(3n)::after { animation-delay: 3.1s; }
+
+/* Twinkling star on each story coin (kept inside the badge so it isn't clipped). */
+@keyframes ig-twinkle { 0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); } 45%, 55% { opacity: 1; transform: scale(1) rotate(90deg); } }
+.ig .ig-stories .ig-story-badge > .ig-spark,
+.ig .ig-stories .ig-story-badge::before {
+  content: "✦"; position: absolute; top: 3px; right: 4px; z-index: 4; font-size: 10px; line-height: 1;
+  color: #fff6d5; text-shadow: 0 0 5px rgba(255,214,120,0.95); pointer-events: none;
+  animation: ig-twinkle 2.9s ease-in-out infinite;
+}
+.ig .ig-stories .ig-story:nth-child(3) .ig-story-badge::before { animation-delay: .5s; }
+.ig .ig-stories .ig-story:nth-child(4) .ig-story-badge::before { animation-delay: 1s; }
+.ig .ig-stories .ig-story:nth-child(5) .ig-story-badge::before { animation-delay: 1.5s; }
+.ig .ig-stories .ig-story:nth-child(6) .ig-story-badge::before { animation-delay: 2s; }
+
+/* Card depth shadow — neutral (gold halo/ring removed). */
+@keyframes ig-halo { 0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px -20px rgba(0,0,0,0.85); }
+  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 18px 40px -20px rgba(0,0,0,0.9); } }
+.ig .ig-post { animation: ig-halo 5.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-post::after,
+  .ig .ig-stories .ig-story-badge::before,
+  .ig .ig-post { animation: none !important; }
+  .ig .ig-post::after { display: none; }
+  .ig .ig-stories .ig-story-badge::before { opacity: 0.9; animation: none !important; }
+}
+
+/* ===================================================================
+   HEADER-ICON SPIN + 3D NAVIGATION POWER — shared across every .ig route.
+   The top-bar icons do a periodic 3D coin-flip; the bottom-nav badges lift
+   in 3D (staggered) with the active tab popping forward. Layout-neutral,
+   reduced-motion safe. */
+
+/* Top-bar action icons periodically flip in 3D (a premium glint of motion). */
+@keyframes ig-hdrflip { 0%, 68% { transform: rotateY(0deg); } 84% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
+.ig .ig-top-r .ig-ic { perspective: 460px; }
+.ig .ig-top-r .ig-ic svg {
+  animation: ig-hdrflip 5.5s ease-in-out infinite; transform-style: preserve-3d;
+  filter: drop-shadow(0 0 5px rgba(246,230,176,0.35)); will-change: transform;
+}
+.ig .ig-top-r .ig-ic:nth-of-type(2) svg { animation-delay: .9s; }
+
+/* Bottom nav — 3D depth: perspective on the frame, badges lift toward the
+   viewer on a staggered bob so the bar feels alive; active tab pops further. */
+.ig .ig-nav-frame { perspective: 680px; }
+@keyframes ig-navlift { 0%, 100% { transform: translateZ(0) translateY(0); } 50% { transform: translateZ(14px) translateY(-2px); } }
+.ig .ig-nav-i .ig-nav-badge {
+  transform-style: preserve-3d; will-change: transform;
+  animation: ig-navlift 3.2s ease-in-out infinite;
+}
+.ig .ig-nav-i:nth-child(2) .ig-nav-badge { animation-delay: .26s; }
+.ig .ig-nav-i:nth-child(3) .ig-nav-badge { animation-delay: .52s; }
+.ig .ig-nav-i:nth-child(4) .ig-nav-badge { animation-delay: .78s; }
+.ig .ig-nav-i:nth-child(5) .ig-nav-badge { animation-delay: 1.04s; }
+.ig .ig-nav-i:nth-child(6) .ig-nav-badge { animation-delay: 1.30s; }
+/* the C74 brand tab lifts higher — the 3D centrepiece */
+.ig .ig-nav-i.brand .ig-nav-badge { animation-duration: 2.8s; }
+/* active tab: stronger forward pop + gold bloom under the icon */
+.ig .ig-nav-i.on .ig-nav-badge { animation-duration: 2.4s; filter: drop-shadow(0 6px 12px rgba(46,224,138,0.55)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-top-r .ig-ic svg,
+  .ig .ig-nav-i .ig-nav-badge { animation: none !important; }
+}
+
+/* ===================================================================
+   MAX POWER — an intensity boost layered over the premium effects above.
+   Redefines the shared keyframes stronger and speeds the motion, so every
+   .ig route reads richer and more energetic. Still layout-neutral and
+   reduced-motion safe (the earlier reduce blocks disable these too). */
+
+/* stronger coin glow + bigger pump */
+@keyframes ig-storyglow {
+  0%, 100% { filter: drop-shadow(0 3px 7px rgba(0,0,0,0.5)); transform: scale(1); }
+  50%      { filter: drop-shadow(0 5px 20px rgba(240,201,74,0.95)); transform: scale(1.12); }
+}
+.ig .ig-stories .ig-story-badge img { animation-duration: 2.2s; }   /* faster spin */
+.ig .ig-stories .ig-story-badge     { animation-duration: 2.2s; }   /* faster pump  */
+
+/* card depth — neutral breathing shadow (gold ring/bloom removed) */
+@keyframes ig-halo {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px -20px rgba(0,0,0,0.85); }
+  50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 20px 44px -18px rgba(0,0,0,0.9); }
+}
+.ig .ig-post { animation-duration: 4.4s; }
+
+/* brighter, quicker glass sheen */
+.ig .ig-post::after {
+  background: linear-gradient(105deg, transparent 32%, rgba(255,246,213,0.2) 46%, rgba(255,255,255,0.34) 50%, rgba(255,246,213,0.2) 54%, transparent 68%);
+  animation-duration: 5.6s;
+}
+
+/* deeper 3D nav lift + stronger active bloom */
+@keyframes ig-navlift { 0%, 100% { transform: translateZ(0) translateY(0); } 50% { transform: translateZ(22px) translateY(-3px); } }
+.ig .ig-nav-i.on .ig-nav-badge { filter: drop-shadow(0 8px 16px rgba(46,224,138,0.75)) drop-shadow(0 0 10px rgba(240,201,74,0.5)); }
+.ig .ig-nav-i.on { box-shadow: inset 0 0 22px -6px rgba(46,224,138,0.5); }
+
+/* header icons glow brighter as they flip */
+.ig .ig-top-r .ig-ic svg { filter: drop-shadow(0 0 8px rgba(246,230,176,0.6)); animation-duration: 4.6s; }
+
+/* balance chip — neutral depth (gold halo removed) */
+.ig .ig-bal { box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 20px -8px rgba(0,0,0,0.6) !important; }
+
+/* ===================================================================
+   ALL COINS SPIN — extend the rich in-plane spin to the coin icons in the
+   bottom nav so every coin across the app turns, not just the story rail.
+   Flat rotate keeps any inner text (C74) readable. Reduced-motion safe. */
+@keyframes ig-coinspin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+/* C74 brand tab — the centre coin spins richly */
+.ig .ig-nav-i.brand .ig-nav-badge img { animation: ig-coinspin 3.4s linear infinite; will-change: transform; }
+/* other nav coins turn too, slower + staggered so the bar isn't dizzy */
+.ig .ig-nav-i:not(.brand) .ig-nav-badge img { animation: ig-coinspin 7s linear infinite; will-change: transform; }
+.ig .ig-nav-i:nth-child(2) .ig-nav-badge img { animation-delay: .5s; }
+.ig .ig-nav-i:nth-child(3) .ig-nav-badge img { animation-delay: 1s; }
+.ig .ig-nav-i:nth-child(5) .ig-nav-badge img { animation-delay: 1.5s; }
+.ig .ig-nav-i:nth-child(6) .ig-nav-badge img { animation-delay: 2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-nav-i .ig-nav-badge img { animation: none !important; }
+}
+
+/* ===================================================================
+   GLAMOUR+ — ambient drifting stardust over the whole app and a breathing
+   glow on the primary CTAs. Shared across every .ig route, pointer-events
+   none (never blocks taps), reduced-motion safe. */
+
+@keyframes ig-stardust { from { background-position: 0 0, 0 0, 0 0; } to { background-position: 0 -700px, 0 -1100px, 0 -500px; } }
+.ig::after {
+  content: ""; position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.55;
+  background-image:
+    radial-gradient(1.5px 1.5px at 18% 24%, rgba(255,246,213,0.9), transparent 60%),
+    radial-gradient(1.5px 1.5px at 72% 58%, rgba(240,201,74,0.8), transparent 60%),
+    radial-gradient(1px 1px at 46% 82%, rgba(255,255,255,0.85), transparent 60%);
+  background-size: 240px 340px, 300px 420px, 200px 300px;
+  animation: ig-stardust 16s linear infinite;
+}
+
+@keyframes ig-ctaglow {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 14px -6px rgba(46,224,138,0.5); }
+  50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 9px 24px -6px rgba(46,224,138,0.95), 0 0 20px -4px rgba(46,224,138,0.6); }
+}
+.ig .ig-cta, .ig .ig-pill--solid { animation: ig-ctaglow 2.8s ease-in-out infinite; }
+@keyframes ig-ctaglow-gold {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 16px -6px rgba(240,201,74,0.6); }
+  50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 9px 24px -6px rgba(240,201,74,0.95), 0 0 20px -4px rgba(240,201,74,0.65); }
+}
+.ig .ig-bonus-cta { animation: ig-ctaglow-gold 2.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig::after,
+  .ig .ig-cta, .ig .ig-pill--solid, .ig .ig-bonus-cta { animation: none !important; }
+}
+
+/* ===================================================================
+   TITLES INCLUDED — the story-rail and bottom-nav labels get the same
+   living gold shimmer as the brand logo, so every title glints too.
+   Shared .ig layer, reduced-motion safe. */
+.ig .ig-story-l, .ig .ig-nav-l {
+  background-image: linear-gradient(100deg, #c68a2e 0%, #f0c94a 38%, #fff6d5 50%, #f0c94a 62%, #c68a2e 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  animation: ig-titleshimmer 7s linear infinite;
+}
+.ig .ig-nav-i:nth-child(2) .ig-nav-l { animation-delay: .4s; }
+.ig .ig-nav-i:nth-child(4) .ig-nav-l { animation-delay: .8s; }
+.ig .ig-nav-i:nth-child(6) .ig-nav-l { animation-delay: 1.2s; }
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-story-l, .ig .ig-nav-l { animation: none !important; }
+}
+
+/* ===================================================================
+   ICON MOTION BY CONTEXT — coins and the fortune wheel spin (that suits
+   them); the treasure chest, slot machine and crown are objects, so they
+   gently bob/sway instead of spinning. Plus a breathing gold glow on the
+   nav bar and a touch brighter stardust. Shared, reduced-motion safe. */
+
+/* objects bob instead of spin */
+@keyframes ig-iconbob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-3deg); } }
+.ig .ig-nav-i:nth-child(1) .ig-nav-badge img,   /* Home — treasure chest */
+.ig .ig-nav-i:nth-child(2) .ig-nav-badge img,   /* Games — slot machine  */
+.ig .ig-nav-i:nth-child(6) .ig-nav-badge img {  /* Profile — crown       */
+  animation: ig-iconbob 3s ease-in-out infinite !important;
+}
+/* the Reels fortune wheel spins livelier (it IS a wheel) */
+.ig .ig-nav-i:nth-child(3) .ig-nav-badge img { animation-duration: 4s; }
+
+/* glamour: breathing gold glow around the nav bar (filter — no box-shadow clash) */
+@keyframes ig-navframeglow { 0%, 100% { filter: drop-shadow(0 0 6px rgba(240,201,74,0.25)); } 50% { filter: drop-shadow(0 0 13px rgba(240,201,74,0.55)); } }
+.ig .ig-nav-frame { animation: ig-navframeglow 4.5s ease-in-out infinite; }
+
+/* a touch more stardust sparkle */
+.ig::after { opacity: 0.7; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-nav-i .ig-nav-badge img,
+  .ig .ig-nav-frame { animation: none !important; }
+}
+
+/* ===================================================================
+   RICH SWEEP v1 — app-wide premium lift shared by EVERY .ig page.
+   Purely additive presentation (chrome, focus, scrollbar, title shimmer,
+   card depth helper). No layout, routes, data, or logic touched; all
+   motion reduced-motion safe. Loaded globally via main.tsx, so this
+   cascades to all /ig routes at once. */
+
+/* Premium thin gold scrollbar across the whole app */
+.ig { scrollbar-width: thin; scrollbar-color: rgba(240,201,74,0.5) transparent; }
+.ig *::-webkit-scrollbar { width: 7px; height: 7px; }
+.ig *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(240,201,74,0.6), rgba(198,138,46,0.55));
+  border-radius: 999px;
+}
+.ig *::-webkit-scrollbar-track { background: transparent; }
+
+/* Gold-tinted text selection */
+.ig ::selection { background: rgba(240,201,74,0.28); color: #fff; }
+
+/* Accessible + premium gold focus ring on every interactive surface */
+.ig a:focus-visible,
+.ig button:focus-visible,
+.ig [role="button"]:focus-visible,
+.ig input:focus-visible,
+.ig select:focus-visible,
+.ig textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(7,19,13,0.9), 0 0 0 4px rgba(240,201,74,0.55),
+              0 0 16px -2px rgba(240,201,74,0.6);
+  border-radius: 12px;
+}
+
+/* Top bar: warm gold under-glow + fine top gloss (additive — keeps each
+   page's own border/background). Applies to all 26 pages using .ig-top. */
+.ig-top {
+  box-shadow: 0 1px 0 rgba(240,201,74,0.22), 0 10px 26px -18px rgba(0,0,0,0.75);
+}
+.ig-top::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,246,213,0.5), transparent);
+}
+
+/* Page titles: layer a slow horizontal gold shimmer over each page's
+   existing gradient .ig-ttl (23 pages). Overrides only the paint, not the
+   text or layout. */
+.ig .ig-ttl {
+  background-image: linear-gradient(100deg,#c68a2e 0%,#f0c94a 26%,#fff6d5 44%,#f0c94a 62%,#c68a2e 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: ig-sheen 7s linear infinite;
+}
+
+/* Gentle content rise on route entry — the body wrapper every page uses. */
+@keyframes ig-mainrise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.ig .ig-main { animation: ig-mainrise .34s cubic-bezier(.2,.8,.25,1) both; }
+
+/* Opt-in premium card helper: any element tagged .ig-rich gets the gold-framed
+   emerald cabinet look used on Home. Available app-wide for future cards. */
+.ig .ig-rich {
+  position: relative;
+  background:
+    radial-gradient(120% 88% at 50% -12%, rgba(58,240,160,0.12), transparent 56%),
+    linear-gradient(180deg, rgba(21,78,50,0.94), rgba(8,30,19,0.95));
+  box-shadow:
+    inset 0 0 0 1.3px rgba(240,201,74,0.42),
+    inset 0 1.4px 0 rgba(255,255,255,0.24),
+    0 0 24px -12px rgba(240,201,74,0.4),
+    0 20px 44px -24px rgba(0,0,0,0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-ttl { animation: none !important; background-position: 0 50% !important; }
+  .ig .ig-main { animation: none !important; }
+}
+
+/* ===================================================================
+   RICH SWEEP v2 — GLAMOUR. A measured luxury lift on top of v1, shared
+   by every .ig page. Static (no new motion — the v1 title shimmer is the
+   only movement), additive, collision-safe. Presentation only. */
+
+/* Top bar → gold-glass: deeper tri-stop ground, brighter under-bloom, and
+   a crisp gold top hairline. (Refines the v1 .ig-top treatment.) */
+.ig-top {
+  background-image:
+    linear-gradient(180deg, rgba(13,45,29,0.5), rgba(9,32,20,0) 70%),
+    linear-gradient(180deg, rgba(9,32,20,0.92), rgba(9,32,20,0.6)) !important;
+  box-shadow:
+    0 1px 0 rgba(240,201,74,0.34),
+    0 6px 20px -10px rgba(240,201,74,0.28),
+    0 14px 34px -22px rgba(0,0,0,0.8);
+}
+
+/* Page titles → soft gold bloom under the shimmer (drop-shadow, not a new
+   animation — keeps it glamorous but calm). */
+.ig .ig-ttl { filter: drop-shadow(0 1px 6px rgba(240,201,74,0.34)); }
+
+/* Every page body gets a faint gold horizon at the very top — a subtle
+   "spotlight from above" that reads as premium. Non-interactive, static. */
+.ig .ig-main { position: relative; }
+.ig .ig-main::before {
+  content: ""; position: absolute; left: 50%; top: -10px; transform: translateX(-50%);
+  width: 150%; height: 190px; pointer-events: none; z-index: 0;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(240,201,74,0.10), rgba(46,224,138,0.05) 42%, transparent 72%);
+}
+.ig .ig-main > * { position: relative; z-index: 1; }
+
+/* Glossier gold scrollbar thumb */
+.ig *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #fff4cf, #f0c94a 42%, #c68a2e);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* .ig-rich helper → a touch more jewel-like (deeper emerald core, warmer
+   gold frame, softer outer gold halo). */
+.ig .ig-rich {
+  background:
+    radial-gradient(120% 90% at 50% -14%, rgba(58,240,160,0.16), transparent 58%),
+    linear-gradient(180deg, rgba(24,86,55,0.96), rgba(7,28,18,0.96));
+  box-shadow:
+    inset 0 0 0 1.4px rgba(240,201,74,0.5),
+    inset 0 1.6px 0 rgba(255,246,213,0.3),
+    inset 0 30px 50px -34px rgba(58,240,160,0.34),
+    0 0 30px -12px rgba(240,201,74,0.5),
+    0 24px 52px -26px rgba(0,0,0,0.88);
+}
+
+/* Selection: warmer gold */
+.ig ::selection { background: rgba(240,201,74,0.34); color: #06180f; }
+
+/* ===================================================================
+   DEEP-GLAM FINISH — Home / Wallet / Explore. These three surfaces are
+   already fully gold-framed (jewel cards, RICH POLISH v2, premium grid),
+   so the lift here is FINISH not more gilding: a premium hover-lift +
+   crisp press on their primary cards, and a hair more glow on the Home
+   hero surfaces. Transform/box-shadow only — no layout, reduced-motion
+   safe, presentation only. */
+
+/* interactive lift on desktop pointers; crisp press everywhere */
+@media (hover:hover) and (pointer:fine) {
+  .ig .igw-bal, .ig .igw-c74, .ig .igw-row,
+  .ig .ige-cell, .ig .ig-post {
+    transition: transform .16s cubic-bezier(.2,.8,.25,1), box-shadow .16s ease, filter .16s ease;
+  }
+  .ig .igw-c74:hover, .ig .igw-row:hover, .ig .ige-cell:hover {
+    transform: translateY(-2px); filter: brightness(1.04);
+  }
+  .ig .igw-bal:hover, .ig .ig-post:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 0 1.5px rgba(240,201,74,0.6), inset 0 1.6px 0 rgba(255,246,213,0.34),
+                0 0 34px -12px rgba(240,201,74,0.6), 0 30px 60px -26px rgba(0,0,0,0.9);
+  }
+}
+
+/* Home hero surfaces — a touch more bloom (glow only, additive) */
+.ig .ig-story-av.ring, .ig .ig-story-badge {
+  box-shadow: 0 0 20px -3px rgba(240,201,74,0.72), 0 0 40px -12px rgba(46,224,138,0.5) !important;
+}
+.ig .ig-media--photo {
+  box-shadow: 0 0 26px -6px rgba(240,201,74,0.62), 0 0 50px -16px rgba(46,224,138,0.5),
+              0 18px 36px -18px rgba(0,0,0,0.82) !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .ig .igw-bal, .ig .igw-c74, .ig .igw-row, .ig .ige-cell, .ig .ig-post { transition: none !important; transform: none !important; }
+}
+
+/* ===================================================================
+   TOP-RICH — utility pages. Missions, Bank, Support, Analytics, KYC and
+   Responsible were plainer than the hero surfaces; this lifts their primary
+   cards to the same gold-framed emerald cabinet, with a premium hover-lift
+   and crisp press. Additive box-shadow + transform only (backgrounds and
+   layout untouched); reduced-motion safe; presentation only. */
+
+.ig .igmis-card, .ig .igbank-panel, .ig .igsup-row,
+.ig .igan-tile, .ig .igresp-card {
+  box-shadow:
+    inset 0 0 0 1.3px rgba(240,201,74,0.44),
+    inset 0 1.5px 0 rgba(255,246,213,0.26),
+    inset 0 26px 46px -32px rgba(58,240,160,0.28),
+    0 0 26px -13px rgba(240,201,74,0.44),
+    0 22px 48px -26px rgba(0,0,0,0.86);
+}
+.ig .igresp-tile {
+  box-shadow: inset 0 0 0 1px rgba(240,201,74,0.34), inset 0 1px 0 rgba(255,246,213,0.18);
+}
+
+/* KYC: gild the status card + verification steps rail if present */
+.ig .igkyc-status, .ig .igkyc-steps {
+  box-shadow: inset 0 0 0 1.2px rgba(240,201,74,0.4), 0 0 24px -14px rgba(240,201,74,0.42),
+              0 18px 40px -24px rgba(0,0,0,0.85);
+}
+
+/* premium hover-lift (desktop) + crisp press, matching the hero pages */
+@media (hover:hover) and (pointer:fine) {
+  .ig .igmis-card, .ig .igbank-panel, .ig .igsup-row, .ig .igan-tile, .ig .igresp-card {
+    transition: transform .16s cubic-bezier(.2,.8,.25,1), box-shadow .16s ease, filter .16s ease;
+  }
+  .ig .igsup-row:hover, .ig .igmis-card:hover, .ig .igan-tile:hover {
+    transform: translateY(-2px); filter: brightness(1.04);
+  }
+}
+.ig .igsup-row:active, .ig .igmis-card:active { transform: translateY(1px); }
+
+@media (prefers-reduced-motion:reduce) {
+  .ig .igmis-card, .ig .igbank-panel, .ig .igsup-row, .ig .igan-tile, .ig .igresp-card {
+    transition: none !important; transform: none !important;
+  }
+}
+
+/* ===================================================================
+   TONE UNIFY — one canonical warm palette across every .ig page. The
+   shared tokens were already ~consensus; a few drifted (--ink, --mut,
+   --line). Pinning them at `.ig.ig` specificity (beats each page's own
+   `.ig {}` block, load-order independent) makes all 28 pages render the
+   exact same emerald-felt + gold tone. Colour tokens only — no new gold,
+   no layout, no logic. */
+.ig.ig {
+  --ink: #f0fff7;
+  --mut: #93c3aa;
+  --faint: #5f8b76;
+  --grn: #2ee08a;
+  --grn2: #0e7a4a;
+  --gold: #f0c94a;
+  --gold-lite: #fff4cf;
+  --gold-deep: #c68a2e;
+  --gold3: #c68a2e;
+  --antique: #e8c877;
+  --loss: #ff6b7d;
+  --line: rgba(240,201,74,0.24);
+  --hair: rgba(255,255,255,0.06);
+  --bg: #07130d;
+  --card: #103524;
+  --card2: #12492f;
+}

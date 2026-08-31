@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Hash → path redirect: rewrites /#/foo legacy URLs to /foo for BrowserRouter -->
+    <script>
+      (function () {
+        var h = window.location.hash;
+        if (h && h.length > 1 && h.charAt(1) === '/') {
+          var target = h.slice(1) + window.location.search;
+          window.history.replaceState(null, '', target);
+        }
+      })();
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+    <meta name="google-site-verification" content="Tt1TLxXjk3eBRvd3-cSD6HQlmkZAjYu0COsWcUs4-lw" />
+    <style>html,body{background:#0a3d29;margin:0;overscroll-behavior:none}</style>
+    <title>C7 Winners — Premium Crypto Casino</title>
+    <meta name="description" content="C7 Casinos (Season Casinos) — next-generation crypto casino. Plinko, Mines, Crash, Dice, Wheel, Limbo & Hilo. Real-time, provably fair, instant payouts.">
+    <meta name="keywords" content="C7 Casinos, Season Casinos, crypto casino, provably fair, plinko, mines, crash, dice, wheel, limbo, hilo, USDT">
+    <meta name="author" content="C7 Casinos" />
+    <link rel="canonical" href="https://c7winners.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="C7 Casinos" />
+    <meta property="og:url" content="https://c7winners.com/" />
+    <meta property="og:image" content="https://c7winners.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://c7winners.com/og-image.jpg" />
+    
+    <!-- Preconnect to font origins for faster LCP. Supabase preconnect is injected at runtime
+         by src/main.tsx using import.meta.env.VITE_SUPABASE_URL so it matches the deployed backend. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <!-- Inline @font-face fallback ensures font-display: swap even if Google CSS is blocked -->
+    <style>
+      /* Force swap so headlines paint instantly with system fallback while web fonts load */
+      @font-face { font-family: "Inter"; font-display: swap; src: local("Inter"); }
+      @font-face { font-family: "Space Grotesk"; font-display: swap; src: local("Space Grotesk"); }
+      @font-face { font-family: "Syne"; font-display: swap; src: local("Syne"); }
+      @font-face { font-family: "DM Sans"; font-display: swap; src: local("DM Sans"); }
+    </style>
+    <!-- Preload critical fonts for LCP element to eliminate render delay -->
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin />
+    <!-- Load fonts asynchronously to prevent render blocking -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" /></noscript>
+    <meta property="og:title" content="C7 Casinos — Premium Crypto Gaming">
+  <meta name="twitter:title" content="C7 Casinos — Premium Crypto Gaming">
+  <meta property="og:description" content="Plinko, Mines, Crash, Dice, Wheel, Limbo & Hilo. Real-time, provably fair, instant payouts.">
+  <meta name="twitter:description" content="Plinko, Mines, Crash, Dice, Wheel, Limbo & Hilo. Real-time, provably fair, instant payouts.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0a3d29">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="C7 Winners">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+
+  <!-- PayPal Web SDK v6 (core) — components loaded on demand via createInstance -->
+
+  <!-- Structured data: Organization + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://c7winners.com/#organization",
+        "name": "C7 Casinos",
+        "alternateName": "Season Casinos",
+        "url": "https://c7winners.com/",
+        "logo": "https://storage.googleapis.com/gpt-engineer-file-uploads/FVhwoWE9NNhLSJmTeQevm93lgkZ2/uploads/1762193241978-logo.png"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://c7winners.com/#website",
+        "url": "https://c7winners.com/",
+        "name": "C7 Casinos",
+        "description": "Premium crypto casino — provably fair Plinko, Mines, Crash, Dice, Wheel, Limbo & Hilo with instant payouts.",
+        "publisher": { "@id": "https://c7winners.com/#organization" }
+      }
+    ]
+  }
+  </script>
+</head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Boot watchdog — recovers a blank screen when the JS bundle itself fails to
+      // load/execute (e.g. a stale service worker serving a cached index that points
+      // at chunk hashes a newer deploy removed). In that case main.tsx never runs, so
+      // its own chunk-error self-heal never registers — this inline script always
+      // runs and is the only thing that can recover. If #root is still empty after a
+      // grace period, purge the SW + caches and hard-reload ONCE (sessionStorage-
+      // guarded so a genuinely-down origin can't cause a reload loop). Clears the
+      // guard once the app mounts, so a future incident can self-heal again.
+      (function () {
+        var KEY = '__c7_boot_recover__';
+        var GRACE_MS = 8000;
+        function mounted() {
+          var r = document.getElementById('root');
+          return !!(r && r.childElementCount > 0);
+        }
+        function clearGuard() { try { sessionStorage.removeItem(KEY); } catch (e) {} }
+        // Once the app has mounted, drop the guard so later incidents can recover.
+        window.addEventListener('load', function () {
+          setTimeout(function () { if (mounted()) clearGuard(); }, GRACE_MS + 2000);
+        });
+        setTimeout(function () {
+          if (mounted()) { clearGuard(); return; }
+          var already = null;
+          try { already = sessionStorage.getItem(KEY); } catch (e) {}
+          if (already) return;                       // already tried once — never loop
+          try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+          var done = false;
+          function reloadOnce() { if (done) return; done = true; window.location.reload(); }
+          var tasks = [];
+          try {
+            if ('serviceWorker' in navigator) {
+              tasks.push(navigator.serviceWorker.getRegistrations()
+                .then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })
+                .catch(function () {}));
+            }
+            if (typeof caches !== 'undefined') {
+              tasks.push(caches.keys()
+                .then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })
+                .catch(function () {}));
+            }
+          } catch (e) {}
+          Promise.all(tasks).then(reloadOnce).catch(reloadOnce);
+          setTimeout(reloadOnce, 1500);              // backstop if cleanup hangs
+        }, GRACE_MS);
+      })();
+    </script>
+    <script>
+      // Register C7Winner service worker (PWA) — gracefully no-op if unsupported.
+      // The SW itself skipWaiting()s on install and clients.claim()s on activate,
+      // so a new deploy's worker takes control of open tabs immediately. This
+      // client then applies the update by reloading — but SAFELY: only when the
+      // app is not in the foreground, so we never interrupt a spin, deposit, or
+      // form entry. Net effect: the app auto-refreshes to the newest version the
+      // next time the user backgrounds/returns to it (no manual close needed).
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        var __c7HadController = !!navigator.serviceWorker.controller;
+        var __c7Reloading = false, __c7Pending = false;
+
+        function __c7Reload() {
+          if (__c7Reloading) return;
+          __c7Reloading = true;
+          window.location.reload();
+        }
+        function __c7ApplyWhenSafe() {
+          // Reload immediately only while hidden (user isn't looking); never
+          // reload mid-interaction.
+          if (document.visibilityState === 'hidden') { __c7Reload(); return; }
+          // App is in the foreground: defer the auto-reload to the next time it's
+          // backgrounded, AND surface a manual "new version — tap to refresh"
+          // nudge (C7UpdateNudge) so the user can update right now without waiting
+          // for a background event. The deferred auto-reload still applies.
+          __c7Pending = true;
+          try { window.dispatchEvent(new CustomEvent('c7:update-ready')); } catch (e) {}
+        }
+        document.addEventListener('visibilitychange', function () {
+          if (__c7Pending && document.visibilityState === 'hidden') __c7Reload();
+        });
+
+        // Fired when the freshly-activated worker takes control of this page.
+        // Skip the very first install (no prior controller) so first-ever loads
+        // don't reload.
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+          if (__c7HadController) __c7ApplyWhenSafe();
+        });
+
+        window.addEventListener('load', function () {
+          navigator.serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .then(function (reg) {
+              // Proactively check for a new deploy each time the app regains
+              // focus, so updates are picked up promptly without a manual reload.
+              document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'visible') { try { reg.update(); } catch (e) {} }
+              });
+            })
+            .catch(function () { /* SW failed to register — silent */ });
+        });
+      }
+    </script>
+  </body>
+</html>

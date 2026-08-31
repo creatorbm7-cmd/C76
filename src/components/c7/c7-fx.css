@@ -1,0 +1,226 @@
+/* ============================================================ */
+/* C7 — Phase 1 FX utilities                                    */
+/* Additive to c7-animations.css. Does not redefine anything.   */
+/* ============================================================ */
+
+/* ── Page transition (used by <PageTransition>) ─────────────── */
+/* Important: this animation MUST NOT use transform. Any non-`none`
+ * transform on a wrapper creates a new containing block per CSS spec,
+ * which scopes `position: fixed` descendants to the wrapper instead
+ * of the viewport. The floating bottom nav lives inside each page
+ * component, so a transform here silently breaks it across the entire
+ * app. Opacity-only is sufficient polish; the 8px slide-up isn't
+ * worth a broken nav.
+ */
+@keyframes c7-page-enter {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+.c7-page-enter {
+  animation: c7-page-enter 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Universal Transition Engine — cinematic reveal on every navigation ─────
+ * A fixed, pointer-events:none overlay (sibling of the routed pages). Its
+ * transform is confined to itself, so it NEVER creates a containing block for
+ * the fixed bottom nav (unlike a transform on the page wrapper). GPU-only. */
+.c7-reveal {
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none; overflow: hidden;
+}
+.c7-reveal-glow {
+  position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(120% 78% at 50% 0%, rgba(46,230,130,0.18), transparent 58%),
+              radial-gradient(120% 78% at 50% 100%, rgba(255,205,90,0.12), transparent 58%);
+  animation: c7-reveal-glow 0.5s ease forwards; will-change: opacity;
+}
+@keyframes c7-reveal-glow { 0% { opacity: 0; } 32% { opacity: 1; } 100% { opacity: 0; } }
+.c7-reveal-sheen {
+  position: absolute; top: -10%; bottom: -10%; left: 0; width: 42%;
+  transform: translateX(-160%) skewX(-14deg);
+  background: linear-gradient(100deg, transparent, rgba(255,214,120,0.30) 44%, rgba(120,240,176,0.24) 56%, transparent);
+  animation: c7-reveal-sweep 0.52s cubic-bezier(0.4, 0, 0.1, 1) forwards; will-change: transform, opacity;
+}
+@keyframes c7-reveal-sweep {
+  0%   { transform: translateX(-160%) skewX(-14deg); opacity: 0; }
+  18%  { opacity: 1; }
+  100% { transform: translateX(360%)  skewX(-14deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .c7-reveal { display: none; } }
+
+/* ── C7 luxury header frame (LuxFrameFX) ──────────────────────────────────
+ * Obsidian art-direction decorative layer, shared across destination pages.
+ * Additive: apply `.c7-lux-head` to a sticky header and drop <LuxFrameFX/>. */
+.c7-lux-head {
+  /* top gold bevel highlight + soft ambient underglow */
+  box-shadow: inset 0 1px 0 rgba(255,216,122,.22), 0 6px 22px -12px rgba(245,180,35,.32);
+  isolation: isolate; /* scope the FX layer's negative z-index to this header */
+}
+/* FX sits above the header background but below all header content — no need to
+ * touch any existing child (avoids clobbering pre-positioned decorations). */
+.c7-lux-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+
+/* Ornamental gold filigree corners */
+.c7-lux-orn {
+  position: absolute; top: 2px; width: 46px; height: 46px; pointer-events: none;
+  color: #F5B423; opacity: .8; filter: drop-shadow(0 0 5px rgba(245,180,35,.5));
+}
+.c7-lux-orn-l { left: 4px; }
+.c7-lux-orn-r { right: 4px; transform: scaleX(-1); }
+.c7-lux-gem {
+  fill: #EAF7FF; transform-origin: center; transform-box: fill-box;
+  animation: c7-lux-gem-tw 3.4s ease-in-out infinite;
+}
+@keyframes c7-lux-gem-tw { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+/* Diamond-dust sparkles drifting across the frame */
+.c7-lux-dust { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.c7-lux-dust i {
+  position: absolute; top: 55%; width: 3px; height: 3px; border-radius: 50%;
+  background: radial-gradient(circle, #EAF7FF, transparent 70%);
+  opacity: 0; animation: c7-lux-dust-drift 7s linear infinite;
+}
+.c7-lux-dust i:nth-child(1){ left: 16%; animation-delay: 0s;   }
+.c7-lux-dust i:nth-child(2){ left: 36%; animation-delay: 1.6s; background: radial-gradient(circle, #FFD87A, transparent 70%); }
+.c7-lux-dust i:nth-child(3){ left: 56%; animation-delay: 3.1s; }
+.c7-lux-dust i:nth-child(4){ left: 72%; animation-delay: 2.2s; background: radial-gradient(circle, #22E07A, transparent 70%); }
+.c7-lux-dust i:nth-child(5){ left: 88%; animation-delay: 4.4s; }
+@keyframes c7-lux-dust-drift {
+  0%   { opacity: 0; transform: translateY(6px) scale(.6); }
+  20%  { opacity: .9; }
+  80%  { opacity: .55; }
+  100% { opacity: 0; transform: translateY(-16px) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c7-lux-gem { animation: none; }
+  .c7-lux-dust i { display: none; }
+}
+
+/* ── Press feedback ─────────────────────────────────────────── */
+/* Use on buttons, cards, anything tappable. Mobile-first.      */
+.c7-press {
+  transition:
+    transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 200ms,
+    box-shadow 200ms;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.c7-press:active {
+  transform: scale(0.96);
+  filter: brightness(1.10);
+}
+/* Strong variant for hero buttons */
+.c7-press-strong {
+  transition:
+    transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 200ms,
+    box-shadow 200ms;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.c7-press-strong:active {
+  transform: scale(0.92) translateY(1px);
+  filter: brightness(1.15);
+}
+
+/* ── Game tile lift ─────────────────────────────────────────── */
+.c7-tile-lift {
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms,
+    filter 220ms;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .c7-tile-lift:hover {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow: 0 18px 36px -10px rgba(0, 255, 213, 0.32);
+    filter: brightness(1.06);
+  }
+}
+.c7-tile-lift:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* ── Active tab pop ─────────────────────────────────────────── */
+@keyframes c7-tab-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+.c7-tab-pop {
+  animation: c7-tab-pop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Gold shimmer skeleton ──────────────────────────────────── */
+.c7-skel-gold {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 201, 64, 0.05) 0%,
+    rgba(255, 201, 64, 0.22) 50%,
+    rgba(255, 201, 64, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: c7-shimmer 1.8s linear infinite;
+  border-radius: 8px;
+}
+.c7-skel-aqua {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 213, 0.04) 0%,
+    rgba(0, 255, 213, 0.16) 50%,
+    rgba(0, 255, 213, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: c7-shimmer 1.8s linear infinite;
+  border-radius: 8px;
+}
+
+/* ── Number tick (subtle highlight when a value changes) ────── */
+@keyframes c7-num-tick {
+  0%   { filter: brightness(1); }
+  35%  { filter: brightness(1.35) drop-shadow(0 0 12px rgba(255,201,64,0.55)); }
+  100% { filter: brightness(1); }
+}
+.c7-num-tick {
+  animation: c7-num-tick 0.6s ease-out both;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Reduced-motion: gracefully disable motion ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .c7-page-enter,
+  .c7-tab-pop,
+  .c7-num-tick {
+    animation: none !important;
+  }
+  .c7-press,
+  .c7-press-strong,
+  .c7-tile-lift {
+    transition: none !important;
+  }
+  .c7-press:active,
+  .c7-press-strong:active,
+  .c7-tile-lift:active,
+  .c7-tile-lift:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ── Global tap feedback (TapFX) ──────────────────────────────────────── */
+.c7-tapfx { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+.c7-tap-ring {
+  position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%;
+  border: 2px solid rgba(255, 221, 128, 0.9);
+  box-shadow: 0 0 10px rgba(53, 217, 138, 0.85), inset 0 0 6px rgba(255, 221, 128, 0.6);
+  transform: scale(0); opacity: 0.95; will-change: transform, opacity;
+  animation: c7-tapring 0.52s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@keyframes c7-tapring { to { transform: scale(6.2); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .c7-tap-ring { display: none; } }
