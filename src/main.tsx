@@ -7,8 +7,8 @@ import App from "./App.tsx";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { wagmiConfig } from "./lib/web3/appkit";
 import "./index.css";
-import "./styles/ig-cartoon.css";
 import "./styles/ig-premium.css";
+import "./styles/ig-cartoon.css";
 
 // Force dark background immediately - no flash
 document.documentElement.style.background = "#04060a";
