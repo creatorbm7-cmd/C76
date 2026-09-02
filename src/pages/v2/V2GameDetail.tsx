@@ -42,7 +42,7 @@ export default function V2GameDetail() {
   const inIg = useLocation().pathname.startsWith("/ig");
   const backTo = inIg ? "/ig/explore" : "/v3";
   const gameBase = inIg ? "/ig/game/" : "/v3/game/";
-  const rootCls = inIg ? "v6 v6-ig" : "v6"; // light theme under /ig; /v3 unchanged
+  const rootCls = "v6"; // emerald theme everywhere — /ig used to force a light variant
   const { games, loading } = useV2Catalog();
   const assets = useAppAssets();
   const [playing, setPlaying] = useState(false);
@@ -249,24 +249,6 @@ const V6_CSS = `
 .v6-cta-sm { max-width: 240px; font-size: 14px; padding: 13px; }
 @media (prefers-reduced-motion: reduce) { .v6-jp-rays, .v6-spin, .v6-cta::before { animation: none !important; } }
 
-/* ── /ig light theme — applies ONLY when opened inside the /ig experience (.v6-ig). /v3 keeps the dark theme. ── */
-.v6.v6-ig { color: #262626; background: #fafafa; }
-.v6-ig .v6-bg { background: radial-gradient(120% 60% at 50% -8%, rgba(10,143,91,0.06), transparent 60%), #fafafa; }
-.v6-ig .v6-loading { color: #0a8f5b; }
-.v6-ig .v6-top { background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.55)); border-bottom: 1px solid #dbdbdb; }
-.v6-ig .v6-back { color: #262626; background: #fff; border: 1px solid #dbdbdb; }
-.v6-ig .v6-toptx, .v6-ig .v6-name { color: #262626; }
-.v6-ig .v6-badge { color: #0a8f5b; background: #eafff4; border: 1px solid #b7e6cf; box-shadow: none; }
-.v6-ig .v6-prov { color: #8e8e8e; }
-.v6-ig .v6-tag { color: #0a8f5b; background: #f3f3f3; border: 1px solid #dbdbdb; }
-.v6-ig .v6-info-c { background: #fff; border: 1px solid #dbdbdb; box-shadow: none; }
-.v6-ig .v6-info-c::before { display: none; }
-.v6-ig .v6-info-ic { color: #0a8f5b; filter: none; }
-.v6-ig .v6-info-v { color: #262626; }
-.v6-ig .v6-info-k { color: #8e8e8e; }
-.v6-ig .v6-desc { color: #454545; background: #fff; border: 1px solid #dbdbdb; }
-.v6-ig .v6-foot { color: #b0b0b0; }
-.v6-ig .v6-cta-bar { background: linear-gradient(180deg, transparent, rgba(250,250,250,0.96) 42%); }
 /* ══ RICH POLISH v3 — HD 2J gold frame on the game-detail hero (presentation only;
    no data/routes/logic touched — matches the Explore & Home 2J frames) ══ */
 .v6-hero { box-shadow: 0 0 20px -6px rgba(240,201,74,0.40), 0 20px 46px -18px rgba(0,0,0,0.55) !important; }
