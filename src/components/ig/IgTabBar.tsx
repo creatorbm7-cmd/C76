@@ -22,7 +22,12 @@ const TABS: Tab[] = [
 
 export default function IgTabBar({ active }: { active: string }) {
   const { pathname } = useLocation();
-  const isOn = (t: Tab) => t.key === active || pathname === t.to;
+  // When the current route IS one of the tabs, that tab alone is active — the
+  // caller's `active` is a hint for deeper routes, not an override. Without
+  // this, /ig/c74 lit both C74 (route match) and Wallet (IgC74 passes
+  // active="wallet" so its sub-pages sit under Wallet).
+  const routeTab = TABS.find((t) => t.to === pathname);
+  const isOn = (t: Tab) => (routeTab ? t.key === routeTab.key : t.key === active);
   return (
     <nav className="ig-nav" aria-label="Primary">
       <style>{CSS}</style>
