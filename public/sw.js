@@ -11,7 +11,7 @@
  * To force a fresh install, bump CACHE_VERSION.
  */
 
-const CACHE_VERSION = 'c7w-v366-boot-watchdog';
+const CACHE_VERSION = 'c7w-v367-no-gold-lines';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const HTML_CACHE   = `${CACHE_VERSION}-html`;
 

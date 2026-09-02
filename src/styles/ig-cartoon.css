@@ -102,9 +102,8 @@
 .ig .ig-post {
   border-radius: 24px !important;
   box-shadow:
-    inset 0 0 0 3px rgba(240, 201, 74, .88),
-    inset 0 0 0 5.5px rgba(6, 22, 13, .92),
-    inset 0 2px 0 4.5px rgba(255, 255, 255, .22),
+    inset 0 0 0 1.5px rgba(6, 22, 13, .92),
+    inset 0 2px 0 2px rgba(255, 255, 255, .10),
     0 12px 0 -2px rgba(4, 16, 10, .55),
     0 26px 40px -18px rgba(0, 0, 0, .92) !important;
 }
@@ -114,7 +113,6 @@
   border: 2.5px solid var(--ink-line) !important;
   box-shadow:
     inset 0 2px 0 rgba(255, 246, 213, .35),
-    0 0 0 2px rgba(240, 201, 74, .9),
     0 3px 0 -1px rgba(4, 16, 10, .8) !important;
 }
 
@@ -139,7 +137,6 @@
   box-shadow:
     inset 0 0 0 2.4px rgba(255, 246, 213, .98),
     inset 0 0 0 5px rgba(6, 22, 13, .95),
-    inset 0 0 0 7.4px rgba(240, 201, 74, .85),
     inset 0 0 22px rgba(0, 0, 0, .4) !important;
 }
 .ig .ig-game-n {
@@ -179,8 +176,7 @@
 .ig .ig-story-badge,
 .ig .ig-story-me {
   box-shadow:
-    0 0 0 3px #f0c94a,
-    0 0 0 5.5px var(--ink-line),
+    0 0 0 3px var(--ink-line),
     0 5px 0 -1px rgba(4, 16, 10, .7) !important;
 }
 .ig .ig-story-badge::after { box-shadow: none !important; }
@@ -226,12 +222,11 @@
   animation: ig-pop .3s cubic-bezier(.2, 1.6, .4, 1) both;
 }
 
-/* ── 9. TAB BAR ───────────────��───────────────────────────────────────── */
+/* ── 9. TAB BAR ───────────────────────────────────────────────────── */
 
 .ig-nav .ig-nav-frame {
   border-radius: 28px !important;
   box-shadow:
-    0 0 20px -2px rgba(240, 201, 74, .5),
     0 0 48px -12px rgba(46, 224, 138, .55),
     0 10px 0 -3px rgba(3, 14, 8, .7),
     0 20px 34px -12px rgba(0, 0, 0, .9) !important;
@@ -244,10 +239,9 @@
 .ig-nav .ig-nav-i { border-radius: 17px !important; }
 .ig-nav .ig-nav-i.on {
   box-shadow:
-    inset 0 0 0 2.4px rgba(240, 201, 74, .95),
+    inset 0 0 0 2.4px rgba(46, 224, 138, .8),
     inset 0 2px 0 rgba(255, 255, 255, .35),
-    0 0 16px -2px rgba(46, 224, 138, .7),
-    0 0 26px -8px rgba(240, 201, 74, .5) !important;
+    0 0 16px -2px rgba(46, 224, 138, .7) !important;
 }
 .ig-nav .ig-nav-l {
   font-weight: 900 !important;
@@ -313,9 +307,8 @@
 /* re-assert the sticker shadows now that nothing animates them away */
 .ig .ig-post {
   box-shadow:
-    inset 0 0 0 3px rgba(240, 201, 74, .88),
-    inset 0 0 0 5.5px rgba(6, 22, 13, .92),
-    inset 0 2px 0 4.5px rgba(255, 255, 255, .22),
+    inset 0 0 0 1.5px rgba(6, 22, 13, .92),
+    inset 0 2px 0 2px rgba(255, 255, 255, .10),
     0 12px 0 -2px rgba(4, 16, 10, .55),
     0 26px 40px -18px rgba(0, 0, 0, .92) !important;
 }
@@ -334,7 +327,6 @@
 }
 .ig-nav .ig-nav-frame {
   box-shadow:
-    0 0 20px -2px rgba(240, 201, 74, .5),
     0 0 48px -12px rgba(46, 224, 138, .55),
     0 10px 0 -3px rgba(3, 14, 8, .7),
     0 20px 34px -12px rgba(0, 0, 0, .9) !important;
