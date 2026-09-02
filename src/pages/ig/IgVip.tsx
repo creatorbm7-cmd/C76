@@ -56,7 +56,7 @@ export default function IgVip() {
       </header>
 
       <main className="ig-main igvip-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/vip.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/v2/vip.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
 
         {/* Current tier + real progression */}
         <section className="igvip-hero">

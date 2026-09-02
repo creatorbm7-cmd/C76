@@ -199,7 +199,7 @@ export default function IgInvite() {
         </div>
       ) : (
         <main className="ig-main iginv-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/invite.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/home/feat-invite.webp" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
           {/* Earnings hero */}
           <div className="iginv-hero">
             <div className="iginv-hero-mini">Unclaimed commission</div>

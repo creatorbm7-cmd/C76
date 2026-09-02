@@ -17,11 +17,11 @@ import { useAppAssets } from "@/hooks/useAppAssets";
 // over automatically; if a file is absent the tile falls back to the composed
 // icon+label below. A bound `tile.<key>` slot (Admin Studio) overrides both.
 const STATIC_TILE: Record<string, string> = {
-  gems: "/images/v3/nav/tile-gems.png",
-  slots: "/images/v3/nav/tile-slots.png",
-  reels: "/images/v3/nav/tile-reels.png",
-  missions: "/images/v3/nav/tile-missions.png",
-  bank: "/images/v3/nav/tile-bank.png",
+  gems: "/icons/home/feat-promo.webp",
+  slots: "/nav/game.webp",
+  reels: "/v2/spin-wheel.png",
+  missions: "/nav/events.webp",
+  bank: "/nav/bank.webp",
 };
 
 type Item = { key: string; slot: string; ic: C7IconName; label: string; sub: string; to: string; match: (p: string) => boolean; featured?: boolean };

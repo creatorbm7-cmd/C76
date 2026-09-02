@@ -46,7 +46,7 @@ export default function IgRewards() {
       </header>
 
       <main className="ig-main igrw-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/rewards.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/v2/rewards.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
         {/* Daily Rewards / C74 hero — the one tasteful gold feature; routes to Token Center */}
         <button type="button" className="igrw-hero" onClick={() => nav("/ig/c74")} aria-label="Open C74 Token Center">
           <span className="igrw-hero-ic" aria-hidden="true"><RewardCrest className="igrw-hero-crest" /></span>

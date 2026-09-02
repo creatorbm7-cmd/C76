@@ -55,7 +55,7 @@ export default function PlayMining() {
 
         <main className="mine-main">
           {/* Ornate concept-art title banner (decorative, no baked data) */}
-          <img className="mine-crown" src="/images/v3/frames/mining-title.png" alt="C74 Play Mining" />
+          <img className="mine-crown" src="/icons/v3/mining.png" alt="C74 Play Mining" />
           {loading && !status ? (
             <div className="mine-loading"><Loader2 className="mine-spin" size={26} /></div>
           ) : error && !status ? (

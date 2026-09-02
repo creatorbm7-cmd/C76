@@ -193,7 +193,7 @@ export default function V3Lobby() {
             app has no real jackpot pool; this preserves the existing cosmetic
             display). Tap launches the real Money Mania catalog game. */}
         <button type="button" className="v3l-mania" onClick={launchJackpot} aria-label="Play the Money Mania jackpot">
-          <img src="/images/v3/money-mania-hero.jpg" alt="Money Mania jackpot — tap to play" decoding="async" fetchPriority="high" />
+          <img src="/icons/v2/jackpot-lotto.jpg" alt="Money Mania jackpot — tap to play" decoding="async" fetchPriority="high" />
         </button>
 
         {/* ── Featured Games ──────────────────────────────────── */}

@@ -41,7 +41,7 @@ export default function C74Wheel({ onWin }: { onWin?: (amount: number, jackpot: 
   const { summary, reload } = useC74();
   const dbAssets = useAppAssets();
   const ASSETS = {
-    wheelFace: dbAssets['wheel.face'] || '/images/v3/c74-wheel-face.png',
+    wheelFace: dbAssets['wheel.face'] || '/v2/spin-wheel.png',
     hub: dbAssets['wheel.hub'] || '',
     pointer: dbAssets['wheel.pointer'] || '',
     backdrop: dbAssets['wheel.backdrop'] || '',

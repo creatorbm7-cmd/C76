@@ -58,7 +58,7 @@ export default function TokenCenter() {
         <main className="tc-main">
           {/* Ornate crown chrome (data-free emblem cropped from the concept art) */}
           <div className="tc-crownwrap">
-            <img className="tc-crown" src="/images/v3/frames/crown-emblem.png" alt="" aria-hidden="true" />
+            <img className="tc-crown" src="/icons/v2/vip.png" alt="" aria-hidden="true" />
             <span className="tc-crown-ttl c7p-title tt-gold">C74 Token Center</span>
           </div>
           {loading && !summary ? (

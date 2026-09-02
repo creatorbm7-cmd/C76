@@ -232,7 +232,7 @@ export default function IgSettings() {
       </header>
 
       <main className="ig-main igset-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/settings.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/v3/hdr/settings.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
         {/* Profile summary */}
         <section className="igset-hero">
           <span className="igset-ava">{initial}</span>

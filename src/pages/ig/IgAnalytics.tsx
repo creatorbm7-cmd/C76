@@ -92,7 +92,7 @@ export default function IgAnalytics() {
         ) : (
           <>
             <div className="ige-hero">
-              <img src="/images/v3/emblems/analytics.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+              <img src="/icons/v2/analytics.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
               <span className="igct-sub">Your play, at a glance</span>
             </div>
             {/* Live summary tiles */}

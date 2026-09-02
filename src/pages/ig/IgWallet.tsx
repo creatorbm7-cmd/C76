@@ -50,7 +50,7 @@ export default function IgWallet() {
       <main className="ig-main igw-main">
         {/* Balance cabinet */}
         <section className="igw-bal">
-          <img className="igw-bal-art" src="/images/v3/balance/coin-stack.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+          <img className="igw-bal-art" src="/icons/v3/bonus-treasure.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
           <span className="igw-bal-k"><img className="igw-bal-cur" src="/images/v3/currency/usd.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />Total balance</span>
           {sError ? (
             <button className="igw-bal-err" onClick={refresh}><AlertCircle size={15} /> Couldn’t load · Retry</button>

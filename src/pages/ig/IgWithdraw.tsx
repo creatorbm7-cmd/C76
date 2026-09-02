@@ -115,7 +115,7 @@ export default function IgWithdraw() {
       </header>
 
       <main className="ig-main igwd-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/withdraw.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/v2/withdraw.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
 
         {/* Balance */}
         <div className="igwd-bal">

@@ -310,7 +310,7 @@ export default function IgCryptoDeposit() {
               >
                 <span className="igcry-network-icon" style={{ ['--igcry-c' as any]: n.color }}>
                   {n.symbol === 'USDT'
-                    ? <img className="igcry-network-coin" src="/images/v3/currency/usdt.png" alt="" aria-hidden="true" onError={(e) => { (e.currentTarget.parentElement as HTMLElement).textContent = n.symbol.slice(0, 4); }} />
+                    ? <img className="igcry-network-coin" src="/icons/v2/usdt.png" alt="" aria-hidden="true" onError={(e) => { (e.currentTarget.parentElement as HTMLElement).textContent = n.symbol.slice(0, 4); }} />
                     : n.symbol.slice(0, 4)}
                 </span>
                 <span className="igcry-network-meta">

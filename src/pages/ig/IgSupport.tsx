@@ -43,7 +43,7 @@ export default function IgSupport() {
       </header>
 
       <main className="ig-main igsup-main">
-        <div className="ige-hero"><img src="/images/v3/emblems/support.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+        <div className="ige-hero"><img src="/icons/v2/hdr/support.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
         {/* 24/7 reassurance + Live Chat CTA */}
         <section className="igsup-hero">
           <span className="igsup-hero-ic"><LifeBuoy size={22} /></span>

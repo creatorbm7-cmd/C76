@@ -21,9 +21,9 @@ const FUTURE = ["Market Price", "Explorer", "Holders", "Circulating Supply", "Ma
 // Currencies the C74 economy interoperates with. USDT deposits + USD balance are
 // live today; ETH (ERC-20) is an honestly-labelled "Soon" rail. No balances implied.
 const ASSETS: { k: string; img: string; soon?: boolean }[] = [
-  { k: "C74", img: "/images/v3/currency/c74.png" },
+  { k: "C74", img: "/icons/v3/c74-token.png" },
   { k: "USD", img: "/images/v3/currency/usd.png" },
-  { k: "USDT", img: "/images/v3/currency/usdt.png" },
+  { k: "USDT", img: "/icons/v2/usdt.png" },
   { k: "ETH", img: "/images/v3/currency/eth.png", soon: true },
 ];
 
@@ -66,7 +66,7 @@ export default function IgC74() {
           />
         ) : (
           <>
-            <div className="ige-hero"><img src="/images/v3/emblems/c74.png" alt="" aria-hidden="true" style={{ width: "min(206px, 56%)" }} onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
+            <div className="ige-hero"><img src="/icons/v2/brand-c74.png" alt="" aria-hidden="true" style={{ width: "min(206px, 56%)" }} onError={(e) => { e.currentTarget.style.display = "none"; }} /></div>
 
             {/* Balance hero — the one tasteful gold feature */}
             <section className="igc74-hero">

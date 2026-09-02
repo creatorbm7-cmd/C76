@@ -147,7 +147,7 @@ export default function IgDeposit() {
 
       <main className="ig-main igdep-main">
         <div className="ige-hero">
-          <img src="/images/v3/emblems/deposit.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+          <img src="/icons/v2/deposit.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
           <span className="igct-sub">Instant deposit — USDT auto-credited</span>
         </div>
 

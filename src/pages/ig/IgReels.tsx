@@ -82,7 +82,7 @@ export default function IgReels() {
       <main className="ig-main igr-main">
         {/* Ornate C74 REELS crest (real art) + provably-fair badge */}
         <section className="igr-hero">
-          <img className="igr-crest" src="/images/v3/reels/hero.png" alt="C74 Reels" loading="eager"
+          <img className="igr-crest" src="/icons/v2/jackpot-lotto.jpg" alt="C74 Reels" loading="eager"
             onError={(e) => { e.currentTarget.style.display = "none"; }} />
           <span className="igr-fairbadge"><ShieldCheck size={14} /><em><b>100%</b> Provably Fair<br />Server Verified</em></span>
         </section>
@@ -100,7 +100,7 @@ export default function IgReels() {
           <span className="igr-spinhero-t">💰 SPIN TO WIN</span>
           <div className="igr-wheel3d">
             <span className="igr-wh-glow" aria-hidden="true" />
-            <img className="igr-wheel" src="/images/v3/c74-wheel-face.png" alt="" loading="eager"
+            <img className="igr-wheel" src="/v2/spin-wheel.png" alt="" loading="eager"
               onError={(e) => { e.currentTarget.style.display = "none"; }} />
             <span className="igr-wh-rim" aria-hidden="true" />
             <svg className="igr-wh-bulbs" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="95" /></svg>

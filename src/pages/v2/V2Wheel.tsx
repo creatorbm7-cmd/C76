@@ -35,7 +35,7 @@ const PRIZES: { ic: C7IconName; l: string; t: string }[] = [
 export default function V2Wheel() {
   const nav = useNavigate();
   const art = useAppAssets();
-  const heroSrc = art["reels.hero"] ?? "/images/v3/reels/hero.png";
+  const heroSrc = art["reels.hero"] ?? "/icons/v2/jackpot-lotto.jpg";
   const [burst, setBurst] = useState<{ amount: number; jackpot: boolean } | null>(null);
 
   return (

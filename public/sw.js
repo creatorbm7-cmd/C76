@@ -11,7 +11,7 @@
  * To force a fresh install, bump CACHE_VERSION.
  */
 
-const CACHE_VERSION = 'c7w-v372-real-icons';
+const CACHE_VERSION = 'c7w-v373-asset-migration';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const HTML_CACHE   = `${CACHE_VERSION}-html`;
 
