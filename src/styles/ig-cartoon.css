@@ -1,300 +1,280 @@
-/* === IG CARTOON STYLE — Bold, Playful, Expressive === */
+/* ═══════════════════════════════════════════════════════════════════════════
+   ig-cartoon.css — CARTOON-RICH overlay for the /ig surfaces
+   ───────────────────────────────────────────────────────────────────────────
+   Drop-in presentation layer. Touches no markup, no routes, no hooks, no
+   component files. It restyles the existing .ig-* classnames that IgHome,
+   IgTabBar, IgExplore, IgWallet, IgC74, IgProfile etc. already render.
 
-/* Color palette for cartoon aesthetic */
-:root {
-  --cartoon-primary: #ff6b35;      /* Vibrant orange-red */
-  --cartoon-secondary: #004e89;    /* Deep ocean blue */
-  --cartoon-accent: #f7b801;       /* Golden yellow */
-  --cartoon-light: #f0f3f5;        /* Off-white */
-  --cartoon-dark: #1a1a1a;         /* Deep charcoal */
-  --cartoon-green: #1dd1a1;        /* Fresh lime-green */
-  --cartoon-purple: #a55eea;       /* Playful purple */
+   INSTALL (one line):
+     src/main.tsx  →  import "@/styles/ig-cartoon.css";
+     (place it AFTER index.css so it wins the cascade)
+
+   Palette is unchanged — the repo's own emerald felt + polished gold. What
+   changes is the FINISH: sticker ink outlines, hard offset shadows, chunkier
+   radii, outlined display numerals, springy presses, bobbing hero art.
+
+   `!important` is used deliberately: each component injects its own <style>
+   block at mount, which lands after any imported sheet.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig {
+  /* ink used for every sticker outline — a near-black emerald, never pure black */
+  --ink-line: #06210f;
+  --ink-gold: #3a2708;
+  --ink-grn: #04321d;
+  --drop-gold: #7a4a12;
+  --drop-grn: #06452a;
 }
 
-/* Cartoon text style — bold, expressive */
-.cartoon-text {
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+/* ── 1. MOTION ─────────────────────────────────────────────────────────── */
+
+@keyframes ig-wobble {
+  0%, 100% { transform: rotate(-3deg) scale(1); }
+  50%      { transform: rotate(3deg) scale(1.06); }
+}
+@keyframes ig-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%      { transform: translateY(-5px) rotate(1.5deg); }
+}
+@keyframes ig-pop {
+  0%   { transform: scale(.8); opacity: 0; }
+  60%  { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* Cartoon heading with exaggerated weight */
-.cartoon-heading {
-  font-family: "Comic Sans MS", "Trebuchet MS", cursive, sans-serif;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--cartoon-primary);
-  text-shadow: 3px 3px 0px var(--cartoon-accent);
+/* every tappable thing presses INTO the page — the shadow slab absorbs it */
+.ig button,
+.ig a[class*="ig-"] {
+  transition: transform .11s cubic-bezier(.2, 1.6, .4, 1), box-shadow .11s ease !important;
+}
+.ig button:active,
+.ig a[class*="ig-"]:active {
+  transform: translateY(3px) scale(.985) !important;
 }
 
-/* Cartoon button — bold, rounded, playful */
-.cartoon-button {
-  background: linear-gradient(135deg, var(--cartoon-primary) 0%, #ff4500 100%);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
-  transform: translateY(0);
-  transition: all 0.2s ease;
+/* ── 2. STICKER BUTTONS ────────────────────────────────────────────────── */
+
+/* gold primaries: welcome CTA, deposit, spin, claim-now */
+.ig .ig-bonus-cta,
+.ig .ig-btn-gold,
+.ig .ig-cta--gold {
+  border: 2.5px solid var(--ink-gold) !important;
+  border-radius: 13px !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .75),
+    0 5px 0 var(--drop-gold),
+    0 10px 18px -8px rgba(0, 0, 0, .7) !important;
 }
 
-.cartoon-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+/* emerald primaries: the .ig-cta action button on every feed post */
+.ig .ig-cta,
+.ig .ig-pill--solid {
+  border: 2.5px solid var(--ink-grn) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .65),
+    0 5px 0 var(--drop-grn),
+    0 10px 18px -8px rgba(0, 0, 0, .7) !important;
 }
 
-.cartoon-button:active {
-  transform: translateY(0);
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+/* ghost pills (Mining / Earn) keep the glass fill, gain the ink edge */
+.ig .ig-pill:not(.ig-pill--solid) {
+  border: 2px solid rgba(240, 201, 74, .55) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 0 -1px rgba(4, 16, 10, .7) !important;
 }
 
-/* Cartoon card with border and shadow */
-.cartoon-card {
-  background: var(--cartoon-light);
-  border: 4px solid var(--cartoon-dark);
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.15);
-  transform: rotate(0deg);
-  transition: all 0.3s ease;
+/* balance pill in the app bar */
+.ig .ig-bal {
+  border: 2.5px solid #f0c94a !important;
+  box-shadow:
+    inset 0 2px 0 rgba(246, 230, 176, .3),
+    0 4px 0 -1px rgba(4, 16, 10, .8) !important;
+}
+.ig .ig-bal-plus {
+  border: 1.5px solid var(--ink-gold);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, .7) !important;
 }
 
-.cartoon-card:hover {
-  transform: rotate(-2deg);
-  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.15);
+/* ── 3. CABINET CARDS ──────────────────────────────────────────────────── */
+
+/* feed posts become fat double-framed cabinets sitting on a shadow slab */
+.ig .ig-post {
+  border-radius: 24px !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(240, 201, 74, .88),
+    inset 0 0 0 5.5px rgba(6, 22, 13, .92),
+    inset 0 2px 0 4.5px rgba(255, 255, 255, .22),
+    0 12px 0 -2px rgba(4, 16, 10, .55),
+    0 26px 40px -18px rgba(0, 0, 0, .92) !important;
 }
 
-/* Cartoon icon with pop effect */
-.cartoon-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--cartoon-secondary) 0%, var(--cartoon-green) 100%);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
-  transform: scale(1);
-  transition: transform 0.2s ease;
+/* the post identity medallion reads as a sticker badge */
+.ig .ig-post-av {
+  border: 2.5px solid var(--ink-line) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 246, 213, .35),
+    0 0 0 2px rgba(240, 201, 74, .9),
+    0 3px 0 -1px rgba(4, 16, 10, .8) !important;
 }
 
-.cartoon-icon:hover {
-  transform: scale(1.1);
+/* LIVE chip wobbles like a cartoon tag */
+.ig .ig-live {
+  border: 1.5px solid #4a0d13 !important;
+  box-shadow: 0 2px 0 #8f1d27 !important;
+  animation: ig-wobble 2.4s ease-in-out infinite;
 }
 
-/* Cartoon badge — playful rounded pill */
-.cartoon-badge {
-  background: var(--cartoon-accent);
-  color: var(--cartoon-dark);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: 700;
-  display: inline-block;
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+/* ── 4. GAME TILES ─────────────────────────────────────────────────────── */
+
+.ig .ig-game {
+  border-radius: 20px !important;
+  box-shadow:
+    0 6px 0 -1px rgba(4, 16, 10, .6),
+    0 16px 26px -12px rgba(0, 0, 0, .9) !important;
+}
+.ig .ig-game img { border-radius: 20px !important; }
+.ig .ig-game::after {
+  border-radius: 20px !important;
+  box-shadow:
+    inset 0 0 0 2.4px rgba(255, 246, 213, .98),
+    inset 0 0 0 5px rgba(6, 22, 13, .95),
+    inset 0 0 0 7.4px rgba(240, 201, 74, .85),
+    inset 0 0 22px rgba(0, 0, 0, .4) !important;
+}
+.ig .ig-game-n {
+  -webkit-text-stroke: 1.5px rgba(4, 18, 10, .9);
+  paint-order: stroke fill;
 }
 
-/* Cartoon divider — dashed, colorful */
-.cartoon-divider {
-  border: none;
-  border-top: 3px dashed var(--cartoon-primary);
-  margin: 20px 0;
+/* the framed hero photo (Money Mania) gets the same fat frame */
+.ig .ig-media--photo {
+  border-radius: 20px !important;
+  box-shadow:
+    0 8px 0 -2px rgba(4, 16, 10, .65),
+    0 22px 34px -14px rgba(0, 0, 0, .92) !important;
+}
+.ig .ig-media--photo img,
+.ig .ig-media--photo::before,
+.ig .ig-media--photo::after { border-radius: 20px !important; }
+.ig .ig-media--photo::before { padding: 3.5px !important; }
+
+/* ── 5. DISPLAY NUMERALS ───────────────────────────────────────────────── */
+
+/* gold on emerald needs an ink stroke to pop — applies to every hero figure */
+.ig .ig-bonus-v,
+.ig .ig-c74-v,
+.ig .ig-logo b,
+.ig .ig-bal-v,
+.ig .ig-jackpot-v {
+  -webkit-text-stroke: 2.5px var(--ink-line);
+  paint-order: stroke fill;
+  letter-spacing: -1px;
+}
+.ig .ig-bonus-v { font-size: 26px !important; }
+.ig .ig-c74-v   { font-size: 32px !important; }
+
+/* ── 6. STORIES RAIL ──────────────────────────────────────────────────── */
+
+.ig .ig-story-badge,
+.ig .ig-story-me {
+  box-shadow:
+    0 0 0 3px #f0c94a,
+    0 0 0 5.5px var(--ink-line),
+    0 5px 0 -1px rgba(4, 16, 10, .7) !important;
+}
+.ig .ig-story-badge::after { box-shadow: none !important; }
+.ig .ig-story-add {
+  border: 2.5px solid var(--ink-line) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, .7) !important;
+}
+.ig .ig-story-l {
+  font-weight: 800 !important;
+  color: #ffe9a3 !important;
+  text-shadow: 0 1.5px 0 rgba(4, 18, 10, .8);
+}
+.ig .ig-story:active .ig-story-av { transform: scale(.9) rotate(-4deg) !important; }
+
+/* ── 7. HERO ART ──────────────────────────────────────────────────────── */
+
+/* the 3D props bob and tilt instead of drifting straight up and down */
+.ig .ig-bonus-art,
+.ig .ig-c74-art,
+.ig .ig-float {
+  animation: ig-bob 3.4s ease-in-out infinite !important;
+}
+/* the C74 medallion is vertically centred by transform upstream — keep it
+   centred with a margin so the bob keyframes can own `transform` */
+.ig .ig-c74-art {
+  top: 50% !important;
+  transform: none !important;
+  margin-top: -48px !important;
+  animation: ig-bob 3.6s ease-in-out infinite !important;
 }
 
-/* Cartoon input field — bold border */
-.cartoon-input {
-  border: 3px solid var(--cartoon-secondary);
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.2s ease;
+/* ── 8. CHIPS & RIBBONS ───────────────────────────────────────────────── */
+
+.ig [class*="ig-ribbon"],
+.ig .ig-chip,
+.ig .ig-tag {
+  border: 2px solid var(--ink-gold) !important;
+  box-shadow: 0 3px 0 -1px rgba(4, 16, 10, .8) !important;
+}
+.ig .ig-badge {
+  border: 2.5px solid var(--ink-line) !important;
+  box-shadow: 0 2px 0 #8f1d27 !important;
+  animation: ig-pop .3s cubic-bezier(.2, 1.6, .4, 1) both;
 }
 
-.cartoon-input:focus {
-  outline: none;
-  border-color: var(--cartoon-primary);
-  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2);
-  transform: scale(1.02);
+/* ── 9. TAB BAR ───────────────────────────────────────────────────────── */
+
+.ig-nav .ig-nav-frame {
+  border-radius: 28px !important;
+  box-shadow:
+    0 0 20px -2px rgba(240, 201, 74, .5),
+    0 0 48px -12px rgba(46, 224, 138, .55),
+    0 10px 0 -3px rgba(3, 14, 8, .7),
+    0 20px 34px -12px rgba(0, 0, 0, .9) !important;
+}
+.ig-nav .ig-nav-frame::before {
+  border-radius: 28px !important;
+  padding: 3px !important;
+}
+.ig-nav .ig-nav-frame::after { border-radius: 28px 28px 40% 40% !important; }
+.ig-nav .ig-nav-i { border-radius: 17px !important; }
+.ig-nav .ig-nav-i.on {
+  box-shadow:
+    inset 0 0 0 2.4px rgba(240, 201, 74, .95),
+    inset 0 2px 0 rgba(255, 255, 255, .35),
+    0 0 16px -2px rgba(46, 224, 138, .7),
+    0 0 26px -8px rgba(240, 201, 74, .5) !important;
+}
+.ig-nav .ig-nav-l {
+  font-weight: 900 !important;
+  filter:
+    drop-shadow(0 1.5px 0 rgba(4, 18, 10, .9))
+    drop-shadow(0 0 5px rgba(240, 201, 74, .3)) !important;
+}
+.ig-nav .ig-nav-i:active { transform: translateY(3px) scale(.94) !important; }
+
+/* ── 10. TAIL ─────────────────────────────────────────────────────────── */
+
+.ig .ig-end {
+  font-weight: 800 !important;
+  color: #ffe9a3 !important;
+  text-shadow: 0 1.5px 0 rgba(4, 18, 10, .8);
 }
 
-/* Cartoon gradient text */
-.cartoon-gradient {
-  background: linear-gradient(135deg, var(--cartoon-primary) 0%, var(--cartoon-purple) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 900;
-}
+/* ── 11. ACCESSIBILITY ────────────────────────────────────────────────── */
 
-/* Cartoon animation — bounce */
-@keyframes cartoon-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.cartoon-bounce {
-  animation: cartoon-bounce 0.6s ease-in-out infinite;
-}
-
-/* Cartoon animation — pulse */
-@keyframes cartoon-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-}
-
-.cartoon-pulse {
-  animation: cartoon-pulse 0.8s ease-in-out infinite;
-}
-
-/* Cartoon animation — wiggle */
-@keyframes cartoon-wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-2deg); }
-  75% { transform: rotate(2deg); }
-}
-
-.cartoon-wiggle {
-  animation: cartoon-wiggle 0.4s ease-in-out infinite;
-}
-
-/* Cartoon panel — elevated with corner accent */
-.cartoon-panel {
-  background: white;
-  border: 3px solid var(--cartoon-dark);
-  border-radius: 12px;
-  padding: 24px;
-  position: relative;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
-}
-
-.cartoon-panel::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 20px;
-  height: 20px;
-  background: var(--cartoon-accent);
-  border-radius: 50%;
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-/* Cartoon progress bar */
-.cartoon-progress {
-  background: #e0e0e0;
-  border: 3px solid var(--cartoon-dark);
-  border-radius: 10px;
-  overflow: hidden;
-  height: 20px;
-}
-
-.cartoon-progress-fill {
-  background: linear-gradient(90deg, var(--cartoon-green) 0%, var(--cartoon-accent) 100%);
-  height: 100%;
-  transition: width 0.3s ease;
-  box-shadow: inset -2px 0 0 rgba(0, 0, 0, 0.2);
-}
-
-/* Cartoon tag — multiple colors */
-.cartoon-tag {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  margin: 4px;
-  border: 2px solid var(--cartoon-dark);
-}
-
-.cartoon-tag.primary {
-  background: var(--cartoon-primary);
-  color: white;
-}
-
-.cartoon-tag.secondary {
-  background: var(--cartoon-secondary);
-  color: white;
-}
-
-.cartoon-tag.success {
-  background: var(--cartoon-green);
-  color: var(--cartoon-dark);
-}
-
-.cartoon-tag.warning {
-  background: var(--cartoon-accent);
-  color: var(--cartoon-dark);
-}
-
-/* Cartoon shadow effect — exaggerated */
-.cartoon-shadow {
-  box-shadow: 0 10px 0px rgba(0, 0, 0, 0.3),
-              0 20px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Cartoon stroke text effect */
-.cartoon-stroke {
-  color: var(--cartoon-light);
-  -webkit-text-stroke: 2px var(--cartoon-dark);
-  text-stroke: 2px var(--cartoon-dark);
-}
-
-/* Cartoon rounded container */
-.cartoon-container {
-  background: var(--cartoon-light);
-  border: 4px solid var(--cartoon-primary);
-  border-radius: 20px;
-  padding: 30px;
-  position: relative;
-}
-
-/* Cartoon speech bubble */
-.cartoon-speech {
-  background: var(--cartoon-accent);
-  border: 3px solid var(--cartoon-dark);
-  border-radius: 12px;
-  padding: 16px;
-  position: relative;
-  color: var(--cartoon-dark);
-  font-weight: 600;
-}
-
-.cartoon-speech::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 20px;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 0 solid transparent;
-  border-top: 12px solid var(--cartoon-accent);
-}
-
-/* Responsive cartoon styles */
-@media (max-width: 768px) {
-  .cartoon-heading {
-    font-size: 24px;
-  }
-
-  .cartoon-button {
-    padding: 10px 18px;
-    font-size: 14px;
-    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
-  }
-
-  .cartoon-card {
-    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15);
-  }
-
-  .cartoon-panel::before {
-    width: 16px;
-    height: 16px;
-    top: -6px;
-    right: -6px;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-live,
+  .ig .ig-bonus-art,
+  .ig .ig-c74-art,
+  .ig .ig-float,
+  .ig .ig-badge { animation: none !important; }
+  .ig button:active,
+  .ig a[class*="ig-"]:active,
+  .ig-nav .ig-nav-i:active,
+  .ig .ig-story:active .ig-story-av { transform: none !important; }
 }
