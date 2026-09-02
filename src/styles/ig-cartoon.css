@@ -336,3 +336,206 @@
   transition: transform .11s cubic-bezier(.2, 1.6, .4, 1) !important;
 }
 .ig .ig-post { transition: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   13. GLOBAL PATTERN GLAMOUR — every /ig screen
+   ───────────────────────────────────────────────────────────────────────────
+   A fixed, non-interactive emerald wash + hairline weave behind the whole
+   surface. `.ig::after` is already taken by ig-premium.css, so this uses
+   ::before. Content is lifted a stacking level so nothing is dimmed.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig { position: relative; isolation: isolate; }
+.ig::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 44% at 50% 0%, rgba(46, 224, 138, .11), transparent 72%),
+    radial-gradient(46% 34% at 104% 102%, rgba(46, 224, 138, .07), transparent 74%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, .016) 0 2px, transparent 2px 8px);
+}
+.ig > *,
+.ig .ig-top,
+.ig .ig-main,
+.ig-nav { position: relative; z-index: 1; }
+
+/* the sticky header picks up the same emerald hairline instead of a gold one */
+.ig .ig-top {
+  box-shadow:
+    0 1px 0 rgba(46, 224, 138, .22),
+    0 10px 24px -16px rgba(0, 0, 0, .7) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   14. BRIGHT TITLES
+   ───────────────────────────────────────────────────────────────────────────
+   ig-premium.css paints .ig-ttl as gold gradient text (transparent fill +
+   background-clip). That has to be unwound in full — resetting only the
+   colour would leave the fill transparent and the text invisible.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-ttl {
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #eafff3 !important;
+  font-weight: 800 !important;
+  letter-spacing: -.2px;
+  filter: drop-shadow(0 1px 0 rgba(4, 18, 10, .85)) !important;
+  animation: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15. FULL-SIZE ICONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-ic {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 13px !important;
+  color: #eafff3 !important;
+}
+.ig .ig-ic svg {
+  width: 26px !important;
+  height: 26px !important;
+  stroke-width: 2.1;
+  filter: drop-shadow(0 1.5px 0 rgba(4, 18, 10, .75));
+}
+.ig .ig-ic:active { transform: scale(.88) !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   16. 3D EMERALD STORY ORBS
+   ───────────────────────────────────────────────────────────────────────────
+   The rail's avatars read as lit spheres: a top-left key light, a deep core,
+   a rim light along the bottom edge, and a contact shadow under each orb.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-story-av {
+  border-radius: 50% !important;
+  box-shadow:
+    0 0 0 2px rgba(46, 224, 138, .55),
+    0 0 0 3.5px var(--ink-line),
+    0 6px 10px -4px rgba(0, 0, 0, .75) !important;
+}
+.ig .ig-story-av.ring {
+  background:
+    conic-gradient(from 210deg, #2ee08a, #7bffc4, #0e7a4a, #2ee08a) !important;
+  padding: 2.5px !important;
+  box-shadow:
+    0 0 14px -4px rgba(46, 224, 138, .6),
+    0 6px 10px -4px rgba(0, 0, 0, .75) !important;
+}
+.ig .ig-story-in {
+  background:
+    radial-gradient(68% 62% at 32% 22%, #37e29a 0%, #12693f 46%, #05170e 100%) !important;
+  border: 2px solid var(--ink-line) !important;
+  color: #eafff3 !important;
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, .34),
+    inset 0 -6px 12px rgba(2, 12, 7, .8) !important;
+}
+/* the specular highlight sitting on the sphere */
+.ig .ig-story-in::before {
+  left: 16% !important;
+  right: 30% !important;
+  top: 8% !important;
+  height: 32% !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .5), transparent) !important;
+  filter: blur(1px);
+}
+.ig .ig-story-in svg { filter: drop-shadow(0 2px 0 rgba(3, 16, 9, .85)); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   17. NORMAL STORY RAIL
+   ───────────────────────────────────────────────────────────────────────────
+   Even spacing, an emerald hairline under the rail, and a plain press — no
+   rotation, so the orbs stay upright.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-stories {
+  gap: 15px !important;
+  padding: 14px !important;
+  border-bottom: 1px solid rgba(46, 224, 138, .2) !important;
+}
+.ig .ig-story:active .ig-story-av {
+  transform: scale(.93) !important;
+  rotate: none !important;
+}
+.ig .ig-story-l {
+  color: #d8ffe9 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 0 rgba(4, 18, 10, .8);
+}
+.ig .ig-story-add {
+  background: linear-gradient(180deg, #7bffc4, #2ee08a) !important;
+  color: #04240f !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18. WALLET GLAMOUR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .igw-bal,
+.ig .igw-c74 {
+  border-radius: 22px !important;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(46, 224, 138, .3),
+    inset 0 2px 0 2px rgba(255, 255, 255, .1),
+    0 10px 0 -3px rgba(4, 16, 10, .5),
+    0 24px 38px -18px rgba(0, 0, 0, .9) !important;
+}
+.ig .igw-bal-v {
+  -webkit-text-stroke: 2px var(--ink-line);
+  paint-order: stroke fill;
+  letter-spacing: -1px;
+}
+.ig .igw-act-ic,
+.ig .igw-ic {
+  border-radius: 15px !important;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(46, 224, 138, .32),
+    0 4px 0 -1px rgba(4, 16, 10, .7) !important;
+}
+.ig .igw-act-ic svg,
+.ig .igw-ic svg { filter: drop-shadow(0 1.5px 0 rgba(4, 18, 10, .7)); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   19. REELS + C74 GLAMOUR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .igr-post,
+.ig .igr-hero,
+.ig .igc74-asset {
+  border-radius: 22px !important;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(46, 224, 138, .28),
+    0 10px 0 -3px rgba(4, 16, 10, .5),
+    0 24px 38px -18px rgba(0, 0, 0, .9) !important;
+}
+.ig .igr-crest,
+.ig .igr-fairbadge,
+.ig .igr-prize,
+.ig .igr-freespin {
+  box-shadow:
+    inset 0 0 0 1.5px rgba(46, 224, 138, .34),
+    0 3px 0 -1px rgba(4, 16, 10, .75) !important;
+}
+.ig .igc74-bal-usd,
+.ig .igc74-bal-k {
+  color: #eafff3 !important;
+  text-shadow: 0 1.5px 0 rgba(4, 18, 10, .8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   20. REDUCED MOTION — sections 13-19
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-ic:active,
+  .ig .ig-story:active .ig-story-av { transform: none !important; }
+}
