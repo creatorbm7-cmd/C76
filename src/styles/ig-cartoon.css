@@ -695,3 +695,19 @@
   font-size: clamp(22px, 7vw, 32px) !important;
   line-height: 1.15 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   24. STORY GLYPH WEIGHT
+   ───────────────────────────────────────────────────────────────────────────
+   C7Icon renders at 26px inside a 62px orb, which left the glyph small and
+   dim against the deep emerald core. Scale it to the orb and lift it off the
+   background.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-story-in svg {
+  width: 34px !important;
+  height: 34px !important;
+  filter:
+    drop-shadow(0 2px 0 rgba(3, 16, 9, .9))
+    drop-shadow(0 0 10px rgba(240, 201, 74, .35)) !important;
+}

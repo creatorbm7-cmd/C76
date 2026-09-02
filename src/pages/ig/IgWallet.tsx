@@ -82,7 +82,7 @@ export default function IgWallet() {
 
         {/* C74 row */}
         <button className="igw-c74" onClick={() => nav("/ig/c74")}>
-          <span className="igw-c74-ic"><img className="igw-c74-img" src="/images/v3/balance/c74-coin.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></span>
+          <span className="igw-c74-ic"><img className="igw-c74-img" src="/icons/v3/c74-token.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} /></span>
           <span className="igw-c74-tx">
             {cLoading ? <span className="igw-sk igw-sk-c74" /> : <b>{fmtNum(c74)} C74</b>}
             <small>Token balance · tap to manage</small>

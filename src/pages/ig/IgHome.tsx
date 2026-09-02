@@ -25,13 +25,13 @@ const HOME_RIBBON: Record<V2Badge, IgRibbonKind> = { HOT: "hot", NEW: "new", JAC
 
 // Stories rail — real routes. `ring` gives the gold story-ring.
 const STORIES: { key: string; label: string; ic: C7IconName; to: string; ring?: boolean; badge?: string }[] = [
-  { key: "reels", label: "C74 Reels", ic: "coin", to: "/ig/reels", badge: "/images/v3/stories/story-reels.png" },
-  { key: "slots", label: "Slots", ic: "coins", to: "/ig/explore", badge: "/images/v3/stories/story-slots.png" },
-  { key: "missions", label: "Missions", ic: "target", to: "/ig/missions", badge: "/images/v3/stories/story-missions.png" },
-  { key: "bank", label: "Bank", ic: "bank", to: "/ig/bank", badge: "/images/v3/stories/story-bank.png" },
-  { key: "gems", label: "Gems", ic: "gem", to: "/ig/explore", badge: "/images/v3/stories/story-gems.png" },
-  { key: "vip", label: "VIP", ic: "crown", to: "/ig/vip", badge: "/images/v3/stories/story-vip.png" },
-  { key: "refer", label: "Invite", ic: "gift", to: "/ig/invite", badge: "/images/v3/stories/story-invite.png" },
+  { key: "reels", label: "C74 Reels", ic: "coin", to: "/ig/reels", ring: true },
+  { key: "slots", label: "Slots", ic: "coins", to: "/ig/explore", ring: true },
+  { key: "missions", label: "Missions", ic: "target", to: "/ig/missions", ring: true },
+  { key: "bank", label: "Bank", ic: "bank", to: "/ig/bank", ring: true },
+  { key: "gems", label: "Gems", ic: "gem", to: "/ig/explore", ring: true },
+  { key: "vip", label: "VIP", ic: "crown", to: "/ig/vip", ring: true },
+  { key: "refer", label: "Invite", ic: "gift", to: "/ig/invite", ring: true },
 ];
 
 export default function IgHome() {
@@ -117,7 +117,7 @@ export default function IgHome() {
         {/* Money Mania jackpot post */}
         <FeedPost icon={<C7Icon name="trophy" size={18} />} title="Money Mania" sub="Live jackpot" live onOpen={launchMania}>
           <button className="ig-media ig-media--photo" onClick={launchMania} aria-label="Play Money Mania">
-            <img src="/images/v3/money-mania-hero.jpg" alt="Money Mania jackpot" loading="lazy" />
+            <img src="/icons/v2/jackpot-lotto.jpg" alt="Money Mania jackpot" loading="lazy" />
           </button>
           <FeedActions primary="Play" onPrimary={launchMania} />
           <p className="ig-cap"><b>Money Mania</b> Spin the reels — be the next millionaire. 🎰</p>
@@ -127,7 +127,7 @@ export default function IgHome() {
         <FeedPost icon={<C7Icon name="coin" size={18} />} title="C74 Token" sub={`Your balance · ${pulse.rank.name}`}
           onOpen={() => nav("/ig/c74")}>
           <div className="ig-media ig-media--c74">
-            <img className="ig-c74-art" src="/images/v3/balance/c74-medallion.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+            <img className="ig-c74-art" src="/icons/v3/c74-token.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
             <span className="ig-c74-k">YOUR C74 BALANCE</span>
             <span className="ig-c74-v">{fmtNum(c74Bal)} <em>C74</em></span>
             <div className="ig-c74-row">

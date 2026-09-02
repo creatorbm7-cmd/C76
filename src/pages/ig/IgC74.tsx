@@ -70,7 +70,7 @@ export default function IgC74() {
 
             {/* Balance hero — the one tasteful gold feature */}
             <section className="igc74-hero">
-              <img className="igc74-coin" src="/images/v3/balance/c74-medallion.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+              <img className="igc74-coin" src="/icons/v3/c74-token.png" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} />
               <div className="igc74-tier">{c74TierIcon(tier)} {tier}</div>
               <div className="igc74-bal-k"><Coins size={14} /> C74 Balance</div>
               <div className="igc74-bal-v ig-sheen">{fmt(bal)}</div>

@@ -12,12 +12,12 @@ type Tab = { key: string; to: string; label: string; icon: string; brand?: boole
 
 // Premium round 3D nav badges already in the repo (gold-framed emerald glyphs).
 const TABS: Tab[] = [
-  { key: "home", to: "/ig", label: "Home", icon: "/images/v3/nav/home.png" },
-  { key: "explore", to: "/ig/explore", label: "Games", icon: "/images/v3/nav/explore.png" },
-  { key: "reels", to: "/ig/reels", label: "Reels", icon: "/images/v3/nav/reels.png" },
-  { key: "c74", to: "/ig/c74", label: "C74", icon: "/images/v3/nav/c74.png", brand: true },
-  { key: "wallet", to: "/ig/wallet", label: "Wallet", icon: "/images/v3/nav/wallet.png" },
-  { key: "profile", to: "/ig/profile", label: "Profile", icon: "/images/v3/nav/profile.png" },
+  { key: "home", to: "/ig", label: "Home", icon: "/icons/v2/nav/home.png" },
+  { key: "explore", to: "/ig/explore", label: "Games", icon: "/icons/v2/nav/casino.png" },
+  { key: "reels", to: "/ig/reels", label: "Reels", icon: "/v2/spin-wheel.png" },
+  { key: "c74", to: "/ig/c74", label: "C74", icon: "/icons/v2/brand-c74.png", brand: true },
+  { key: "wallet", to: "/ig/wallet", label: "Wallet", icon: "/icons/v2/nav/wallet.png" },
+  { key: "profile", to: "/ig/profile", label: "Profile", icon: "/icons/v2/nav/profile.png" },
 ];
 
 export default function IgTabBar({ active }: { active: string }) {
