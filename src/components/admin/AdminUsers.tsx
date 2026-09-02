@@ -22,6 +22,13 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const PAGE_SIZE = 20;
+// Every read below is capped. Search, sort, the stat strip and the CSV export
+// all run over the whole `users` array in the browser, so the page cannot ask
+// for fewer rows than it shows without those going server-side too — that
+// needs a profiles+wallets view this client cannot create. Until it exists the
+// cap keeps the dashboard from pulling an unbounded table, and the banner says
+// so instead of silently showing a partial list as if it were everything.
+const ROW_CAP = 1000;
 const KYC_OPTIONS = ["pending", "verified", "rejected"];
 
 const STATUS_PILL: Record<string, string> = {
@@ -51,6 +58,8 @@ const STATUS_FILTERS: { key: FilterKey; label: string; tone: string; icon: any }
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [truncated, setTruncated] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [sortKey, setSortKey] = useState<SortKey>("joined");
@@ -66,6 +75,9 @@ export default function AdminUsers() {
   const [editReason, setEditReason] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
   const [resetTarget, setResetTarget] = useState<any>(null);
+  // Ban and suspend lock a real player out, so they go through a confirm step
+  // like any other destructive action. Unban is restorative and stays instant.
+  const [statusTarget, setStatusTarget] = useState<{ user: any; status: "suspended" | "banned" } | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [newFullName, setNewFullName] = useState("");
@@ -75,18 +87,43 @@ export default function AdminUsers() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(null);
     const [walletsRes, profilesRes, depositsRes] = await Promise.all([
-      supabase.from("casino_wallets").select("*"),
-      supabase.from("profiles").select("id, email, full_name, created_at, account_status, kyc_status"),
-      supabase.from("user_deposit_addresses").select("user_id, address, chain"),
+      supabase.from("casino_wallets").select("*").limit(ROW_CAP),
+      supabase.from("profiles")
+        .select("id, email, full_name, created_at, account_status, kyc_status")
+        .order("created_at", { ascending: false })
+        .limit(ROW_CAP),
+      supabase.from("user_deposit_addresses").select("user_id, address, chain").limit(ROW_CAP),
     ]);
+
+    // A failed read used to fall through as `|| []`, so an outage looked
+    // identical to an empty casino. Say which read failed instead.
+    const failed = [
+      walletsRes.error && "wallets",
+      profilesRes.error && "profiles",
+      depositsRes.error && "deposit addresses",
+    ].filter(Boolean) as string[];
+    if (failed.length) {
+      setLoadError(`Could not load ${failed.join(", ")}. Figures below are incomplete.`);
+    }
+
     const wallets = walletsRes.data || [];
     const profiles = profilesRes.data || [];
     const depositAddrs = depositsRes.data || [];
+    setTruncated(profiles.length >= ROW_CAP);
 
-    const { data: betsData } = await supabase.from("casino_bets").select("user_id");
+    // Bet counts used to come from `casino_bets.select("user_id")` — every bet
+    // row ever recorded, fetched on each mount purely to length-count them per
+    // user. Scope it to the profiles actually loaded, in chunks so the URL
+    // cannot overflow. Still row-based; a grouped count needs the view.
     const betCounts: Record<string, number> = {};
-    (betsData || []).forEach(b => { betCounts[b.user_id] = (betCounts[b.user_id] || 0) + 1; });
+    const ids = profiles.map(p => p.id);
+    for (let i = 0; i < ids.length; i += 200) {
+      const { data: betsData } = await supabase
+        .from("casino_bets").select("user_id").in("user_id", ids.slice(i, i + 200));
+      (betsData || []).forEach(b => { betCounts[b.user_id] = (betCounts[b.user_id] || 0) + 1; });
+    }
 
     const addrMap: Record<string, string> = {};
     (depositAddrs || []).forEach(d => { if (!addrMap[d.user_id]) addrMap[d.user_id] = d.address; });
@@ -332,6 +369,18 @@ export default function AdminUsers() {
       <div className="absolute inset-0 v8-mesh-bg opacity-60 pointer-events-none -z-10" />
 
       <div className="space-y-5">
+        {loadError && (
+          <div className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-[11px] text-rose-200">
+            {loadError}
+          </div>
+        )}
+        {truncated && (
+          <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-200">
+            Showing the {ROW_CAP.toLocaleString()} newest accounts. Totals, search and the CSV
+            export cover these rows only — not the full user base.
+          </div>
+        )}
+
         {/* ═══ 3D HERO — USER COMMAND CENTER ═══ */}
         <div className="relative overflow-hidden rounded-2xl border border-amber-500/20 v8-gradient-border"
              style={{
@@ -638,8 +687,8 @@ export default function AdminUsers() {
                           <IconBtn onClick={() => viewTxHistory(u.id)} title="Transactions" tone="orange"><CreditCard className="h-3.5 w-3.5" /></IconBtn>
                           {u.account_status === "active" ? (
                             <>
-                              <IconBtn onClick={() => updateAccountStatus(u.id, "suspended")} title="Suspend" tone="amber"><UserX className="h-3.5 w-3.5" /></IconBtn>
-                              <IconBtn onClick={() => updateAccountStatus(u.id, "banned")} title="Ban" tone="rose"><Ban className="h-3.5 w-3.5" /></IconBtn>
+                              <IconBtn onClick={() => setStatusTarget({ user: u, status: "suspended" })} title="Suspend" tone="amber"><UserX className="h-3.5 w-3.5" /></IconBtn>
+                              <IconBtn onClick={() => setStatusTarget({ user: u, status: "banned" })} title="Ban" tone="rose"><Ban className="h-3.5 w-3.5" /></IconBtn>
                             </>
                           ) : (
                             <IconBtn onClick={() => updateAccountStatus(u.id, "active")} title="Unban" tone="emerald"><UserCheck className="h-3.5 w-3.5" /></IconBtn>
@@ -708,8 +757,8 @@ export default function AdminUsers() {
               <div className="flex items-center gap-2 flex-shrink-0">
                 {selectedUser.account_status === "active" ? (
                   <>
-                    <Button size="sm" variant="outline" onClick={() => updateAccountStatus(selectedUser.id, "suspended")} className="text-[10px] h-7 border-amber-500/30 text-amber-300 hover:bg-amber-500/10"><UserX className="h-3 w-3 mr-1" />Suspend</Button>
-                    <Button size="sm" variant="outline" onClick={() => updateAccountStatus(selectedUser.id, "banned")} className="text-[10px] h-7 border-rose-500/30 text-rose-300 hover:bg-rose-500/10"><Ban className="h-3 w-3 mr-1" />Ban</Button>
+                    <Button size="sm" variant="outline" onClick={() => setStatusTarget({ user: selectedUser, status: "suspended" })} className="text-[10px] h-7 border-amber-500/30 text-amber-300 hover:bg-amber-500/10"><UserX className="h-3 w-3 mr-1" />Suspend</Button>
+                    <Button size="sm" variant="outline" onClick={() => setStatusTarget({ user: selectedUser, status: "banned" })} className="text-[10px] h-7 border-rose-500/30 text-rose-300 hover:bg-rose-500/10"><Ban className="h-3 w-3 mr-1" />Ban</Button>
                   </>
                 ) : (
                   <Button size="sm" onClick={() => updateAccountStatus(selectedUser.id, "active")} className="text-[10px] h-7 bg-emerald-600 hover:bg-emerald-500 text-white"><UserCheck className="h-3 w-3 mr-1" />Unban</Button>
@@ -857,6 +906,34 @@ export default function AdminUsers() {
             </div>
           </DialogContent>
         </Dialog>
+
+        <AlertDialog open={!!statusTarget} onOpenChange={(o) => !o && setStatusTarget(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {statusTarget?.status === "banned" ? "Ban this user?" : "Suspend this user?"}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                <span className="block">User: <b>{statusTarget?.user?.email}</b></span>
+                <span className="block mt-1">Balance: <b className="text-amber-400">${Number(statusTarget?.user?.balance ?? 0).toFixed(2)}</b></span>
+                <span className="block mt-2 text-xs text-white/50">
+                  {statusTarget?.status === "banned"
+                    ? "They lose access immediately. Reversible from this table with Unban."
+                    : "They cannot play or withdraw until reinstated. Reversible from this table."}
+                </span>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => { if (statusTarget) { updateAccountStatus(statusTarget.user.id, statusTarget.status); setStatusTarget(null); } }}
+                disabled={actionLoading}
+                className={statusTarget?.status === "banned" ? "bg-rose-600 hover:bg-rose-700" : "bg-amber-600 hover:bg-amber-700"}>
+                {actionLoading ? "Working…" : statusTarget?.status === "banned" ? "Ban user" : "Suspend user"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         <AlertDialog open={!!resetTarget} onOpenChange={(o) => !o && setResetTarget(null)}>
           <AlertDialogContent>
