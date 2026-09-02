@@ -719,3 +719,21 @@
     drop-shadow(0 2px 0 rgba(3, 16, 9, .9))
     drop-shadow(0 0 10px rgba(240, 201, 74, .35)) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   25. STILL HEADER ICONS
+   ───────────────────────────────────────────────────────────────────────────
+   ig-premium.css spins the two header glyphs on a 5.5s rotateY loop
+   (`ig-hdrflip`). For most of each cycle they sit flat, but they pass through
+   edge-on, where the icon all but disappears — it shows up in any screenshot
+   caught mid-flip and reads as a rendering fault rather than an effect.
+   Cancelled here rather than in ig-premium.css so that sheet stays the
+   baseline and this one keeps owning the finish.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-top-r .ig-ic svg {
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+.ig .ig-top-r .ig-ic { perspective: none !important; }
