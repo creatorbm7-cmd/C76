@@ -11,7 +11,7 @@
  * To force a fresh install, bump CACHE_VERSION.
  */
 
-const CACHE_VERSION = 'c7w-v370-gold-ring';
+const CACHE_VERSION = 'c7w-v371-orb-fix';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const HTML_CACHE   = `${CACHE_VERSION}-html`;
 

@@ -565,44 +565,47 @@
     0 6px 10px -4px rgba(0, 0, 0, .75); }
 }
 
-/* polished gold band — deep at the shoulders, bright at the light points */
-.ig .ig-story-av.ring,
-.ig .ig-story-av.ig-story-badge,
-.ig .ig-story-av.ig-story-me {
+/* polished gold band — deep at the shoulders, bright at the light points.
+
+   The band is painted on a transparent BORDER (padding-box fill + border-box
+   gradient) rather than as the element background behind the child. That
+   matters: several story images are missing from this build, and a plain
+   background would show the gold straight through a broken <img>, turning
+   each orb into a solid gold disc. With the border trick the fill underneath
+   is always the emerald orb. */
+.ig .ig-story-av.ring {
   background:
     conic-gradient(from 208deg,
-      #8a5a18 0deg,
-      #f0c94a 42deg,
-      #fff6d5 78deg,
-      #f0c94a 120deg,
-      #a9741f 176deg,
-      #f0c94a 232deg,
-      #fff3c8 272deg,
-      #f0c94a 310deg,
+      #8a5a18 0deg, #f0c94a 42deg, #fff6d5 78deg, #f0c94a 120deg,
+      #a9741f 176deg, #f0c94a 232deg, #fff3c8 272deg, #f0c94a 310deg,
       #8a5a18 360deg) !important;
   padding: 3px !important;
-  border: none !important;
-  overflow: visible !important;
+  animation: ig-ringglow 3.2s ease-in-out infinite !important;
+}
+.ig .ig-story-av.ig-story-badge,
+.ig .ig-story-av.ig-story-me {
+  border: 3px solid transparent !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(68% 62% at 32% 22%, #37e29a 0%, #12693f 46%, #05170e 100%) padding-box,
+    conic-gradient(from 208deg,
+      #8a5a18 0deg, #f0c94a 42deg, #fff6d5 78deg, #f0c94a 120deg,
+      #a9741f 176deg, #f0c94a 232deg, #fff3c8 272deg, #f0c94a 310deg,
+      #8a5a18 360deg) border-box !important;
   animation: ig-ringglow 3.2s ease-in-out infinite !important;
 }
 
-/* the ink groove — keeps the gold band from bleeding into the orb */
-.ig .ig-story-av.ring .ig-story-in,
-.ig .ig-story-av.ig-story-badge img,
-.ig .ig-story-av.ig-story-me img {
-  box-shadow: 0 0 0 1.5px rgba(6, 33, 15, .95) !important;
-}
-.ig .ig-story-av.ig-story-badge,
-.ig .ig-story-av.ig-story-me {
-  display: grid !important;
-  place-items: center !important;
-}
+/* a missing image must not punch a hole in the orb — it keeps the emerald
+   fill and its own rounding, so the rail still reads as a row of orbs */
 .ig .ig-story-av.ig-story-badge img,
 .ig .ig-story-av.ig-story-me img {
   width: 100% !important;
   height: 100% !important;
   border-radius: 50% !important;
   object-fit: cover !important;
+  background: radial-gradient(68% 62% at 32% 22%, #37e29a 0%, #12693f 46%, #05170e 100%) !important;
+  color: transparent !important;
 }
 /* the photo badge paints its own overlay ring — no longer needed */
 .ig .ig-story-badge::after { box-shadow: none !important; border: none !important; }
@@ -626,4 +629,69 @@
       0 0 16px -3px rgba(240, 201, 74, .6),
       0 6px 10px -4px rgba(0, 0, 0, .75) !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   22. GRACEFUL DEGRADATION FOR MISSING ART
+   ───────────────────────────────────────────────────────────────────────────
+   15 of the 17 images this surface asks for are absent from the build — the
+   whole /images/v3/ tree (story art, nav glyphs, the Money Mania hero, the
+   C74 medallion). Production serves the SPA fallback for them, so the
+   browser gets HTML where it expected a PNG and paints its broken-image
+   placeholder. Until the art ships, these rules keep a missing file from
+   wrecking the layout: panels hold their shape, placeholders stay small.
+   None of this substitutes for the real assets.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* a broken hero collapses to a hairline — hold the panel open and fill it
+   with the same emerald the orbs use, so it reads as art-not-yet-loaded */
+.ig .ig-media--photo,
+.ig .ig-media--bonus,
+.ig .ig-media--c74 {
+  min-height: 170px !important;
+  background:
+    radial-gradient(90% 80% at 30% 15%, #17603c 0%, #0a2d1c 55%, #05170e 100%) !important;
+}
+.ig .ig-media--photo img {
+  min-height: 170px;
+  object-fit: cover;
+  background: transparent !important;
+}
+
+/* nav glyphs: cap the placeholder so a missing file cannot draw a big
+   rotated box across the bar, and drop any inherited tilt */
+.ig-nav .ig-nav-i img {
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain !important;
+  transform: none !important;
+  rotate: none !important;
+  border: none !important;
+  color: transparent !important;
+}
+/* labels carry the bar on their own while the glyphs are missing */
+.ig-nav .ig-nav-l {
+  font-size: 11px !important;
+  color: #d8ffe9 !important;
+  opacity: 1 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   23. HERO NUMERAL FIT
+   ───────────────────────────────────────────────────────────────────────────
+   Section 5 set .ig-bonus-v to 26px with a 2.5px stroke; on a 390px screen
+   "10,000 Bonus Coins" runs past the card edge and the last word is clipped.
+   Scale it to the box instead of a fixed size.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-bonus-v {
+  font-size: clamp(18px, 5.6vw, 26px) !important;
+  -webkit-text-stroke: 2px var(--ink-line);
+  line-height: 1.15 !important;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+.ig .ig-c74-v {
+  font-size: clamp(22px, 7vw, 32px) !important;
+  line-height: 1.15 !important;
 }
