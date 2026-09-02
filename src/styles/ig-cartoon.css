@@ -79,16 +79,16 @@
 
 /* ghost pills (Mining / Earn) keep the glass fill, gain the ink edge */
 .ig .ig-pill:not(.ig-pill--solid) {
-  border: 2px solid rgba(240, 201, 74, .55) !important;
+  border: 2px solid rgba(46, 224, 138, .45) !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 0 -1px rgba(4, 16, 10, .7) !important;
 }
 
 /* balance pill in the app bar */
 .ig .ig-bal {
-  border: 2.5px solid #f0c94a !important;
+  border: 2.5px solid rgba(46, 224, 138, .55) !important;
   box-shadow:
-    inset 0 2px 0 rgba(246, 230, 176, .3),
+    inset 0 2px 0 rgba(255, 255, 255, .22),
     0 4px 0 -1px rgba(4, 16, 10, .8) !important;
 }
 .ig .ig-bal-plus {
@@ -245,9 +245,7 @@
 }
 .ig-nav .ig-nav-l {
   font-weight: 900 !important;
-  filter:
-    drop-shadow(0 1.5px 0 rgba(4, 18, 10, .9))
-    drop-shadow(0 0 5px rgba(240, 201, 74, .3)) !important;
+  filter: drop-shadow(0 1.5px 0 rgba(4, 18, 10, .9)) !important;
 }
 .ig-nav .ig-nav-i:active { transform: translateY(3px) scale(.94) !important; }
 
