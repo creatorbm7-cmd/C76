@@ -158,15 +158,22 @@
 
 /* ── 5. DISPLAY NUMERALS ───────────────────────────────────────────────── */
 
-/* gold on emerald needs an ink stroke to pop — applies to every hero figure */
+/* Gold on emerald needs separating from the felt, but NOT with a stroke: every
+   one of these figures is gradient text (transparent fill + background-clip),
+   and a stroke on that is drawn into the glyph rather than around it. At the
+   logo's 21px a 2.5px stroke swallowed the gradient and "Winners" read as a
+   black smudge. A tight drop-shadow gives the same lift and leaves the gold
+   intact. */
 .ig .ig-bonus-v,
 .ig .ig-c74-v,
 .ig .ig-logo b,
 .ig .ig-bal-v,
 .ig .ig-jackpot-v {
-  -webkit-text-stroke: 2.5px var(--ink-line);
-  paint-order: stroke fill;
-  letter-spacing: -1px;
+  -webkit-text-stroke: 0 !important;
+  letter-spacing: -.5px;
+  filter:
+    drop-shadow(0 1.5px 0 rgba(4, 18, 10, .95))
+    drop-shadow(0 0 7px rgba(2, 12, 7, .55)) !important;
 }
 .ig .ig-bonus-v { font-size: 26px !important; }
 .ig .ig-c74-v   { font-size: 32px !important; }
@@ -490,9 +497,11 @@
     0 24px 38px -18px rgba(0, 0, 0, .9) !important;
 }
 .ig .igw-bal-v {
-  -webkit-text-stroke: 2px var(--ink-line);
-  paint-order: stroke fill;
-  letter-spacing: -1px;
+  -webkit-text-stroke: 0 !important;
+  letter-spacing: -.5px;
+  filter:
+    drop-shadow(0 1.5px 0 rgba(4, 18, 10, .95))
+    drop-shadow(0 0 7px rgba(2, 12, 7, .55)) !important;
 }
 .ig .igw-act-ic,
 .ig .igw-ic {
@@ -686,7 +695,6 @@
 
 .ig .ig-bonus-v {
   font-size: clamp(18px, 5.6vw, 26px) !important;
-  -webkit-text-stroke: 2px var(--ink-line);
   line-height: 1.15 !important;
   max-width: 100%;
   overflow-wrap: break-word;
