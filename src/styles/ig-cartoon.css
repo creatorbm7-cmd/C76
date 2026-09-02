@@ -226,7 +226,7 @@
   animation: ig-pop .3s cubic-bezier(.2, 1.6, .4, 1) both;
 }
 
-/* ── 9. TAB BAR ───────────────────────────────────────────────────────── */
+/* ── 9. TAB BAR ───────────────��───────────────────────────────────────── */
 
 .ig-nav .ig-nav-frame {
   border-radius: 28px !important;
@@ -278,3 +278,71 @@
   .ig-nav .ig-nav-i:active,
   .ig .ig-story:active .ig-story-av { transform: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12. OVERRIDE ig-premium.css GLOW ANIMATIONS
+   ───────────────────────────────────────────────────────────────────────────
+   ig-premium.css animates `box-shadow` on these elements (ig-halo,
+   ig-ctaglow, ig-ctaglow-gold, ig-navframeglow). A running CSS animation
+   outranks even an `!important` declaration, so every static sticker shadow
+   above was being repainted away each frame. Cancelling those four
+   animations is what makes the cartoon treatment visible.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ig .ig-post,
+.ig .ig-cta,
+.ig .ig-pill--solid,
+.ig .ig-bonus-cta,
+.ig .ig-nav-frame,
+.ig-nav .ig-nav-frame {
+  animation: none !important;
+}
+
+/* the premium sheet also lifts posts on hover and adds a 3D perspective to the
+   tab bar — both fight the flat sticker read */
+.ig .ig-post:hover,
+.ig .ig-post {
+  transform: none !important;
+  transition: none !important;
+}
+.ig .ig-nav-frame,
+.ig-nav .ig-nav-frame {
+  perspective: none !important;
+}
+
+/* re-assert the sticker shadows now that nothing animates them away */
+.ig .ig-post {
+  box-shadow:
+    inset 0 0 0 3px rgba(240, 201, 74, .88),
+    inset 0 0 0 5.5px rgba(6, 22, 13, .92),
+    inset 0 2px 0 4.5px rgba(255, 255, 255, .22),
+    0 12px 0 -2px rgba(4, 16, 10, .55),
+    0 26px 40px -18px rgba(0, 0, 0, .92) !important;
+}
+.ig .ig-cta,
+.ig .ig-pill--solid {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .65),
+    0 5px 0 var(--drop-grn),
+    0 10px 18px -8px rgba(0, 0, 0, .7) !important;
+}
+.ig .ig-bonus-cta {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .75),
+    0 5px 0 var(--drop-gold),
+    0 10px 18px -8px rgba(0, 0, 0, .7) !important;
+}
+.ig-nav .ig-nav-frame {
+  box-shadow:
+    0 0 20px -2px rgba(240, 201, 74, .5),
+    0 0 48px -12px rgba(46, 224, 138, .55),
+    0 10px 0 -3px rgba(3, 14, 8, .7),
+    0 20px 34px -12px rgba(0, 0, 0, .9) !important;
+}
+
+/* presses still need to work — re-enable just that transition */
+.ig button,
+.ig a[class*="ig-"] {
+  transition: transform .11s cubic-bezier(.2, 1.6, .4, 1) !important;
+}
+.ig .ig-post { transition: none !important; }
