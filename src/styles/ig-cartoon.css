@@ -539,3 +539,91 @@
   .ig .ig-ic:active,
   .ig .ig-story:active .ig-story-av { transform: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   21. GOLD-RING GLAMOUR
+   ───────────────────────────────────────────────────────────────────────────
+   The one place gold earns its keep: a ring, not a line. Sections 13-20
+   stripped flat gold borders off every surface; this puts a rich, lit gold
+   band back around the story avatars, where the emerald orb of section 16
+   sits inside it. Multi-stop conic gradient so the band reads as polished
+   metal catching light at four points, an ink groove separating it from the
+   orb, and a slow breathing glow.
+
+   Deliberately scoped to the rings only — feed cards, pills, tab bar and
+   titles stay gold-free.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes ig-ringglow {
+  0%, 100% { box-shadow:
+    0 0 0 1px rgba(58, 39, 8, .9),
+    0 0 14px -3px rgba(240, 201, 74, .55),
+    0 6px 10px -4px rgba(0, 0, 0, .75); }
+  50%      { box-shadow:
+    0 0 0 1px rgba(58, 39, 8, .9),
+    0 0 22px -2px rgba(240, 201, 74, .85),
+    0 6px 10px -4px rgba(0, 0, 0, .75); }
+}
+
+/* polished gold band — deep at the shoulders, bright at the light points */
+.ig .ig-story-av.ring,
+.ig .ig-story-av.ig-story-badge,
+.ig .ig-story-av.ig-story-me {
+  background:
+    conic-gradient(from 208deg,
+      #8a5a18 0deg,
+      #f0c94a 42deg,
+      #fff6d5 78deg,
+      #f0c94a 120deg,
+      #a9741f 176deg,
+      #f0c94a 232deg,
+      #fff3c8 272deg,
+      #f0c94a 310deg,
+      #8a5a18 360deg) !important;
+  padding: 3px !important;
+  border: none !important;
+  overflow: visible !important;
+  animation: ig-ringglow 3.2s ease-in-out infinite !important;
+}
+
+/* the ink groove — keeps the gold band from bleeding into the orb */
+.ig .ig-story-av.ring .ig-story-in,
+.ig .ig-story-av.ig-story-badge img,
+.ig .ig-story-av.ig-story-me img {
+  box-shadow: 0 0 0 1.5px rgba(6, 33, 15, .95) !important;
+}
+.ig .ig-story-av.ig-story-badge,
+.ig .ig-story-av.ig-story-me {
+  display: grid !important;
+  place-items: center !important;
+}
+.ig .ig-story-av.ig-story-badge img,
+.ig .ig-story-av.ig-story-me img {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+/* the photo badge paints its own overlay ring — no longer needed */
+.ig .ig-story-badge::after { box-shadow: none !important; border: none !important; }
+
+/* the add-chip returns to gold so it belongs to the ring, not the orb */
+.ig .ig-story-add {
+  background: linear-gradient(180deg, #fff6d5, #f0c94a 55%, #c68a2e) !important;
+  color: #3a2708 !important;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, .8),
+    0 0 0 1.5px rgba(58, 39, 8, .9) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig .ig-story-av.ring,
+  .ig .ig-story-av.ig-story-badge,
+  .ig .ig-story-av.ig-story-me {
+    animation: none !important;
+    box-shadow:
+      0 0 0 1px rgba(58, 39, 8, .9),
+      0 0 16px -3px rgba(240, 201, 74, .6),
+      0 6px 10px -4px rgba(0, 0, 0, .75) !important;
+  }
+}
